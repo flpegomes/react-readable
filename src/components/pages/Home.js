@@ -13,7 +13,6 @@ import CardActions from '@material-ui/core/CardActions';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
-import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 
 
@@ -43,6 +42,7 @@ const styles = {
     },
     root: {
         flexGrow: 1,
+        display: 'flex'
     },
       grow: {
         flexGrow: 1,
@@ -135,17 +135,29 @@ class Home extends Component {
                                 margin="dense"
                                 helperText={(
                                     <div className={classes.root}>
-                                    <span className={classes.grow}>responder post de @flpegomes</span>
-                                    <span style={{color:'#ff0000'}} className={classes.grow}>
-                                        {count}
-                                    </span>
-                                        
+                                        <div className={classes.grow}>
+                                            <span >responder post de @flpegomes</span>
+                                        </div>
+                                        <div>
+                                            {count < 20 ? (
+                                                <span style={{color:'#ff0000'}}>
+                                                    {count}
+                                                </span>
+                                            ) 
+                                            :(
+                                            <span>
+                                                {count}
+                                            </span>
+                                            )}
+                                           
+                                        </div>
                                     </div>
                                     
                                 )}
-                                variant="outlined"
+                                variant="filled"
                                 fullWidth
                                 maxLength={300}
+                                error={count < 0}
                             />  
                         </form>
 
@@ -154,9 +166,6 @@ class Home extends Component {
                         </Button>
                     </CardActions>
                 </Card>
-
-                
-
             </Paper>
         )
     }
