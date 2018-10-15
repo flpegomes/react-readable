@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import PostList from '../post/PostList'
 import Category from '../menu/Category'
-import { getCategories } from '../../modules/actions/categories'
+import { getCategories, selectCategory } from '../../modules/actions/categories'
 import { Link, withRouter } from 'react-router-dom'
 import { getPosts } from '../../modules/actions/posts';
 
@@ -21,41 +21,56 @@ const styles = {
     },    
 }
 
-class Home extends Component {
+class CategoryPosts extends Component {
     
     componentDidMount() {
+        const category = this.props.match.params.category
+
         this.props.dispatch(getCategories());
-        this.props.dispatch(getPosts('all'))
+        this.props.dispatch(selectCategory(category));
+        this.props.dispatch(getPosts(category));
     }
-    
+
+    componentWillReceiveProps(nextProps) {
+        const changeCategory = nextProps.match.params.category
+        if(this.props.category !== changeCategory) {
+            this.props.dispatch(selectCategory(changeCategory))
+            this.props.dispatch(getPosts(changeCategory));
+
+        }
+    }
+
+
+  
+
     render() {
-        
-        const { classes, categories, posts } = this.props   
+        const { classes, categories, posts, category } = this.props   
         return (
             <Paper className={classes.paper}>
 
                 {categories.map((item) => (
-                    <Category key={item.path} name={item.name} path={item.path} />
+                    <Category key={item.path} currentCategory={category} name={item.name} path={item.path} />
                 ))}
                 
-                <PostList posts={posts}/>
+                <PostList posts={posts} category={category}/>
             </Paper>
         )
     }
 }
 
-function mapStateToProps({categories, posts}) {
+function mapStateToProps({categories, posts, currentMenu}) {
     return {
       categories,
       posts,
+      category: currentMenu.category  
     }
   }
-  
+
 
 export default compose(
     withStyles(styles, {
-      name: 'Home',
+      name: 'CategoryPosts',
     }),
     withRouter,
     connect(mapStateToProps)
-  )(Home);
+  )(CategoryPosts);

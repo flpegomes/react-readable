@@ -5,10 +5,10 @@ import App from './components/App';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-//import reducer from './reducers'
-//import middleware from './middleware'
+import reducer from './modules/reducers'
+import middleware from './modules/middleware'
 
-//const store = createStore(reducer, middleware)
+const store = createStore(reducer, middleware)
 
 const theme = createMuiTheme({
     palette: {
@@ -33,8 +33,8 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
-       {/* <Provider store={store}> */}
+        <Provider store={store}>
             <App />
-        {/* </Provider> */}
+        </Provider>
     </MuiThemeProvider>, 
 document.getElementById('root'));

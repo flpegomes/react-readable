@@ -4,7 +4,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux'
 import { compose } from 'redux'
 
 const styles = {
