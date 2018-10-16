@@ -9,6 +9,7 @@ const headers = {
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const ORDERBY_POSTS = 'ORDERBY_POSTS'
 export const RESET_POSTS = 'RESET_POSTS'
+export const UPDATE_POST_VOTE_SCORE_LIST = 'UPDATE_POST_VOTE_SCORE_LIST'
 
 
 function fetchPosts (posts) {
@@ -21,7 +22,6 @@ function fetchPosts (posts) {
 export const getPosts = (category, orderby) => {
     return (dispatch) => {
         let url
-        dispatch(resetPosts())
         if(category === 'all') {
             url = `${api}/posts`
         }
@@ -55,6 +55,8 @@ export const getPostDetail= (id) => {
     }
 }
 
+
+
 export const orderByPosts = (orderby, posts) => {
     const sortedPost = orderByLists(orderby, posts)
     return {
@@ -62,8 +64,30 @@ export const orderByPosts = (orderby, posts) => {
     }
 }
 
-export const resetPosts = (request) => {
+
+export const updatePostVote = (id, vote) => {
+    return (dispatch) => {
+        fetch(`${api}/posts/${id}`, {
+            method: 'POST', headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+              }, body: JSON.stringify({option: vote})
+        })
+        .then((response) => {
+            if(!response.ok) {
+                throw Error(response.statusText)
+            }
+            dispatch(updatePostVoteScore(true))
+            return response
+        })
+        .then((response) => response.json())
+        .then((response) => {})
+        .catch((erro) => console.log(erro))
+    }
+}
+
+export const updatePostVoteScore = (bool) => {
     return {
-      type: RESET_POSTS, payload: request
+      type: UPDATE_POST_VOTE_SCORE_LIST, payload: bool
     }
 }

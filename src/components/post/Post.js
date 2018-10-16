@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-//import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 import { compose } from 'redux'
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
@@ -15,6 +15,7 @@ import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import { formatDate, formatAvatar } from '../../utils/helpers'
+import { updatePostVote } from '../../modules/actions/posts';
 
 
 
@@ -67,6 +68,9 @@ const styles = {
 
 class Post extends Component {
 
+    handleVote = (id, vote) => {
+        this.props.dispatch(updatePostVote(id, vote))
+    }
     
     render() {
         
@@ -113,17 +117,17 @@ class Post extends Component {
                     </CardContent>
                     <CardActions className={classes.actions}>
                         <div className={classes.grow}>
-                            <IconButton aria-label="like">
+                            <IconButton aria-label="like" onClick={() => this.handleVote(post.id, 'upVote')}>
                                 <ThumbUp  />
                             </IconButton>
                             <span style={{color:'#444', fontSize:12}}>{post.voteScore}</span>
-                            <IconButton aria-label="dislike">
+                            <IconButton aria-label="dislike" onClick={() => this.handleVote(post.id, 'downVote')}>
                                 <ThumbDown />
                             </IconButton>
                         </div>
                         <span style={{color:'#444', fontSize:12}}>{post.commentCount}</span>
 
-                        <IconButton aria-label="Share">
+                        <IconButton aria-label="Comments">
                             <QuestionAnswer />
                         </IconButton>
                         
@@ -136,5 +140,6 @@ class Post extends Component {
 export default compose(
     withStyles(styles, {
       name: 'Post',
-    })
+    }),
+    connect()
   )(Post);
