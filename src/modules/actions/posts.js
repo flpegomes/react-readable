@@ -32,7 +32,7 @@ export const getPosts = (category, orderby) => {
         fetch(url, {headers})
             .then((response) => {
                 if (!response.ok) {
-                throw Error(response.statusText)
+                    throw Error(response.statusText)
                 }
                 return response
             })
@@ -71,13 +71,13 @@ export const updatePostVote = (id, vote) => {
             method: 'POST', headers: {
                 ...headers,
                 'Content-Type': 'application/json'
-              }, body: JSON.stringify({option: vote})
+              }, 
+            body: JSON.stringify({option: vote})
         })
         .then((response) => {
             if(!response.ok) {
                 throw Error(response.statusText)
             }
-            dispatch(updatePostVoteScore(true))
             return response
         })
         .then((response) => response.json())

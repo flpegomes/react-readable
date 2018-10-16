@@ -24,14 +24,22 @@ class PostList extends Component {
 
     render() {
         const { posts } = this.props;
-        return (        
-            <div>
-                {posts.map((post) => (
-                    <Post key={post.id} post={post}/>
-                ))}
-            </div>
-                
-        )
+        if(posts) {
+            return (        
+                <div>
+                    {posts.map((post) => (
+                        <Post key={post.id} post={post}/>
+                    ))}
+                </div>
+                    
+            )
+        } else {
+            return (
+                <div> </div>
+            )
+            
+        }
+        
     }
 }
 

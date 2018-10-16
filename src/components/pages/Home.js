@@ -47,7 +47,6 @@ class Home extends Component {
     render() {
         
         const { classes, categories, posts, orderby } = this.props  
-        
         return (
             <Paper className={classes.paper}>
                 <div style={{marginBottom: 8}}>
@@ -61,19 +60,19 @@ class Home extends Component {
                     ))}
                 </div>
                 
+                <PostList posts={posts} />
                 
                 
-                <PostList posts={posts}/>
             </Paper>
         )
     }
 }
 
-function mapStateToProps({categories, posts, currentMenu }) {
+function mapStateToProps(state) {
     return {
-      categories,
-      posts,
-      orderby: currentMenu.orderby
+      categories: state.categories,
+      posts: state.posts.listPosts,
+      orderby: state.currentMenu.orderby
     }
   }
   

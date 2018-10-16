@@ -64,12 +64,13 @@ class CategoryPosts extends Component {
     }
 }
 
-function mapStateToProps({categories, posts, currentMenu}) {
+function mapStateToProps(state) {
+
     return {
-      categories,
-      posts,
-      category: currentMenu.category,
-      orderby: currentMenu.orderby
+      categories: state.categories,
+      posts: state.posts.listPosts,
+      category: state.currentMenu.category,
+      orderby: state.currentMenu.orderby
     }
   }
 

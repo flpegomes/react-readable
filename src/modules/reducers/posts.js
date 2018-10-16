@@ -3,9 +3,19 @@ import { FETCH_POSTS, RESET_POSTS, ORDERBY_POSTS, UPDATE_POST_VOTE_SCORE_LIST } 
 export default function post ( state = [] , action) {
     switch(action.type) {
         case FETCH_POSTS: 
-            return action.posts      
+            return {    
+                ...state,
+                listPosts: action.posts
+                
+            }     
         case ORDERBY_POSTS: 
-            return action.posts 
+            return {
+                ...state,
+                listPosts: action.posts,
+                orderby: action.sortType,
+                activePost: ''
+            } 
+            
         case RESET_POSTS:
             return []        
         default:
