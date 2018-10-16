@@ -81,13 +81,15 @@ export const updatePostVote = (id, vote) => {
             return response
         })
         .then((response) => response.json())
-        .then((response) => {})
+        .then((response) => dispatch(updatePostList(response)))
         .catch((erro) => console.log(erro))
     }
 }
 
-export const updatePostVoteScore = (bool) => {
+
+export const updatePostList = (post) => {
     return {
-      type: UPDATE_POST_VOTE_SCORE_LIST, payload: bool
+      type: UPDATE_POST_VOTE_SCORE_LIST, 
+      post
     }
 }
