@@ -1,4 +1,4 @@
-import { FETCH_CATEGORIES, CURRENT_CATEGORY } from '../actions/categories'
+import { FETCH_CATEGORIES } from '../actions/categories'
 
 export default function categories ( state = [] , action) {
     switch(action.type) {

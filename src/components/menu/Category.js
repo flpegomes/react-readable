@@ -21,16 +21,17 @@ class Category extends Component {
         
         const { classes, name, path, currentCategory } = this.props   
         return (
+            <span>
                 <Chip
                     key={path}
                     label={name}
                     //onClick={handleClick}
                     className={classes.chip}
-                    color="default"
                     component={Link}
-                    to={`/category/${path}`}
+                    to={path === '/' ? '/' : `/category/${path}`}
                     color={currentCategory === name ? 'primary' : 'default'}
                 />
+            </span>
 
 
         )

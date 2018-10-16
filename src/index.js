@@ -9,8 +9,7 @@ import reducer from './modules/reducers'
 import middleware from './modules/middleware'
 
 const store = createStore(reducer, middleware)
-
-const theme = createMuiTheme({
+const theme = createMuiTheme({  
     palette: {
         primary: {
           light: '#58a5f0',
@@ -25,9 +24,8 @@ const theme = createMuiTheme({
           contrastText: '#fff',
         },
         typography: {
-            useNextVariants: true,
+            useNextVariants: true
         },
-        shadows: ['none']
     },
 });
 

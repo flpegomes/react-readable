@@ -6,7 +6,7 @@ import { compose } from 'redux'
 import PostList from '../post/PostList'
 import Category from '../menu/Category'
 import { getCategories } from '../../modules/actions/categories'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { getPosts } from '../../modules/actions/posts';
 
 
@@ -33,6 +33,8 @@ class Home extends Component {
         const { classes, categories, posts } = this.props   
         return (
             <Paper className={classes.paper}>
+
+                <Category key='all' currentCategory='everything' name='everything' path={'/'} />
 
                 {categories.map((item) => (
                     <Category key={item.path} name={item.name} path={item.path} />

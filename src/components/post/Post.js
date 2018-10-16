@@ -53,6 +53,14 @@ const styles = {
     actions: {
         display: 'flex',
         flexGrow: 1,
+    },
+    subtitle: {
+        fontSize: 12,
+        color: '#aaa'
+    },
+    title: {
+        fontSize: 16,
+        color: '#444'
     }
     
 }
@@ -83,15 +91,23 @@ class Post extends Component {
                                 </IconButton>
                                 </div>
                         }
-                        title={`@${post.author}`}
-                        subheader={`${formatDate(post.timestamp)}`}
+                        title={
+                                <Typography variant='h6' component="p" className={classes.title}>
+                                    @{post.author}
+                                </Typography>
+                            }
+                        subheader={
+                                <Typography variant='subtitle1' component="p" className={classes.subtitle}>
+                                    {formatDate(post.timestamp)}
+                                </Typography>
+                            }
                     />
                         
                     <CardContent>
                         <Typography variant='h6' component="p">
                             {post.title}
                         </Typography>
-                        <Typography component="p">
+                        <Typography variant='subtitle1' component="p">
                             {post.body}
                         </Typography>
                     </CardContent>
