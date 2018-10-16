@@ -15,7 +15,7 @@ const styles = {
 }
 
 class Category extends Component {
-
+    
     
     render() {
         
@@ -28,7 +28,7 @@ class Category extends Component {
                     //onClick={handleClick}
                     className={classes.chip}
                     component={Link}
-                    to={path === '/' ? '/' : `/category/${path}`}
+                    to={path === '/' ? '/' : `/${path}`}
                     color={currentCategory === name ? 'primary' : 'default'}
                 />
             </span>

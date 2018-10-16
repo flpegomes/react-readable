@@ -4,10 +4,13 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import PostList from '../post/PostList'
-import Category from '../menu/Category'
 import { getCategories } from '../../modules/actions/categories'
+import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
+import Category from '../menu/Category'
+import OrderBy from '../menu/OrderBy'
 import { withRouter } from 'react-router-dom'
 import { getPosts } from '../../modules/actions/posts';
+
 
 
 const styles = {
@@ -19,26 +22,46 @@ const styles = {
       padding:32,
       maxWidth: 1000
     },    
+    chip: {
+        marginRight: 16
+    },
+
 }
 
 class Home extends Component {
     
     componentDidMount() {
         this.props.dispatch(getCategories());
-        this.props.dispatch(getPosts('all'))
+        this.props.dispatch(selectCategory('all'));
+        this.props.dispatch(selectOrderBy(this.props.orderby))
+        this.props.dispatch(getPosts('all', this.props.orderby ))
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(this.props.orderby !== nextProps.orderby) {
+            this.props.dispatch(getPosts('all', nextProps.orderby ))
+        }
+        
     }
     
     render() {
         
-        const { classes, categories, posts } = this.props   
+        const { classes, categories, posts, orderby } = this.props  
+        
         return (
             <Paper className={classes.paper}>
+                <div style={{marginBottom: 8}}>
+                    <OrderBy currentOrderby={orderby}/>
+                </div>
+                <div>
+                    <Category key='all' currentCategory='everything' name='everything' path={'/'} />
 
-                <Category key='all' currentCategory='everything' name='everything' path={'/'} />
-
-                {categories.map((item) => (
-                    <Category key={item.path} name={item.name} path={item.path} />
-                ))}
+                    {categories.map((item) => (
+                        <Category key={item.path} name={item.name} path={item.path} />
+                    ))}
+                </div>
+                
+                
                 
                 <PostList posts={posts}/>
             </Paper>
@@ -46,10 +69,11 @@ class Home extends Component {
     }
 }
 
-function mapStateToProps({categories, posts}) {
+function mapStateToProps({categories, posts, currentMenu }) {
     return {
       categories,
       posts,
+      orderby: currentMenu.orderby
     }
   }
   

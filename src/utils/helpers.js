@@ -7,3 +7,15 @@ export function formatDate (timestamp) {
 export const formatAvatar = (str = '') => {
     return typeof str !== 'string' ? '' : str.substring(0, 1).toUpperCase()
 }
+
+export const orderByLists = (orderby, posts) => {
+    return posts.sort((a, b) => {
+      if (orderby === 'new') {
+        return b.timestamp - a.timestamp
+      }
+      if (orderby === 'hot') {
+        return b.voteScore - a.voteScore
+      }
+      return null
+    })
+}

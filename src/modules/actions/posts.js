@@ -1,3 +1,5 @@
+import { orderByLists } from '../../utils/helpers'
+
 const api = "http://localhost:3001"
 const headers = {
     'Accept': 'application/json',
@@ -5,6 +7,8 @@ const headers = {
 }
 
 export const FETCH_POSTS = 'FETCH_POSTS'
+export const ORDERBY_POSTS = 'ORDERBY_POSTS'
+export const RESET_POSTS = 'RESET_POSTS'
 
 
 function fetchPosts (posts) {
@@ -14,10 +18,10 @@ function fetchPosts (posts) {
     }
 }
 
-
-export const getPosts = (category) => {
+export const getPosts = (category, orderby) => {
     return (dispatch) => {
         let url
+        dispatch(resetPosts())
         if(category === 'all') {
             url = `${api}/posts`
         }
@@ -33,21 +37,7 @@ export const getPosts = (category) => {
                 return response
             })
         .then((response) => response.json())
-        .then((data) => dispatch(fetchPosts(data)))
-    }
-}
-
-export const getCategoryPosts = (category) => {
-    return (dispatch) => {
-        fetch(`${api}/${category}/posts`, {headers})
-            .then((response) => {
-                if (!response.ok) {
-                throw Error(response.statusText)
-                }
-                return response
-            })
-        .then((response) => response.json())
-        .then((data) => dispatch(fetchPosts(data)))
+        .then((data) => dispatch(orderByPosts(orderby, data)))
     }
 }
 
@@ -62,5 +52,18 @@ export const getPostDetail= (id) => {
             })
         .then((response) => response.json())
         .then((data) => dispatch(fetchPosts(data)))
+    }
+}
+
+export const orderByPosts = (orderby, posts) => {
+    const sortedPost = orderByLists(orderby, posts)
+    return {
+      type: ORDERBY_POSTS, posts: sortedPost, sortType: orderby
+    }
+}
+
+export const resetPosts = (request) => {
+    return {
+      type: RESET_POSTS, payload: request
     }
 }

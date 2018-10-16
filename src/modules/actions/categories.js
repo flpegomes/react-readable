@@ -5,19 +5,11 @@ const headers = {
   }
   
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
-export const CURRENT_CATEGORY = 'CURRENT_CATEGORY'
 
 function fetchCategories (categories) {
     return {
         type: FETCH_CATEGORIES,
         categories
-    }
-}
-
-export const selectCategory = (category) => {
-    return {
-      type: CURRENT_CATEGORY, 
-      category
     }
 }
 

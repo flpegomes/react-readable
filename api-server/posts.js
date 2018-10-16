@@ -24,6 +24,17 @@ const defaultData = {
     voteScore: -5,
     deleted: false,
     commentCount: 0
+  },
+  "6ni6ok3ym7mf1p33l2ez": {
+    id: '6ni6ok3ym7mf1p33l2ez',
+    timestamp: 1469479767190,
+    title: 'Nanodegree React',
+    body: 'Desenvolvendo o segundo projeto do curso de react.',
+    author: 'thingone',
+    category: 'react',
+    voteScore: 1,
+    deleted: false,
+    commentCount: 0
   }
 }
 

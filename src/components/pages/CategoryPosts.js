@@ -5,7 +5,9 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import PostList from '../post/PostList'
 import Category from '../menu/Category'
-import { getCategories, selectCategory } from '../../modules/actions/categories'
+import OrderBy from '../menu/OrderBy'
+import { getCategories } from '../../modules/actions/categories'
+import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
 import { withRouter } from 'react-router-dom'
 import { getPosts } from '../../modules/actions/posts';
 
@@ -25,28 +27,31 @@ class CategoryPosts extends Component {
     
     componentDidMount() {
         const category = this.props.match.params.category
-
         this.props.dispatch(getCategories());
         this.props.dispatch(selectCategory(category));
-        this.props.dispatch(getPosts(category));
+        this.props.dispatch(selectOrderBy(this.props.orderby))
+        this.props.dispatch(getPosts(category, this.props.orderby));
     }
 
     componentWillReceiveProps(nextProps) {
-        const changeCategory = nextProps.match.params.category
-        if(this.props.category !== changeCategory) {
-            this.props.dispatch(selectCategory(changeCategory))
-            this.props.dispatch(getPosts(changeCategory));
-
+        const newCategory = nextProps.match.params.category
+        if((this.props.category !== newCategory) || this.props.orderby !== nextProps.orderby) {
+            this.props.dispatch(selectCategory(newCategory))
+            this.props.dispatch(getPosts(newCategory, nextProps.orderby));
         }
+        
     }
 
 
   
 
     render() {
-        const { classes, categories, posts, category } = this.props   
+        const { classes, categories, posts, category, orderby } = this.props 
         return (
             <Paper className={classes.paper}>
+                <div style={{marginBottom: 8}}>
+                <OrderBy currentOrderby={orderby}/>
+                </div>
                 <Category key='all' currentCategory='all' name='everything' path={'/'} />
 
                 {categories.map((item) => (
@@ -63,7 +68,8 @@ function mapStateToProps({categories, posts, currentMenu}) {
     return {
       categories,
       posts,
-      category: currentMenu.category  
+      category: currentMenu.category,
+      orderby: currentMenu.orderby
     }
   }
 

@@ -5,7 +5,9 @@ import Home from './pages/Home'
 import HeaderBar from './header/HeaderBar'
 import CategoryPosts from './pages/CategoryPosts';
 
+
 class App extends Component {
+
   render() {
     return (
       <Router>
@@ -13,7 +15,7 @@ class App extends Component {
           <HeaderBar />
           <div>
             <Route path='/' exact component={Home} />
-            <Route path='/category/:category' component={CategoryPosts} />
+            <Route path='/:category' component={CategoryPosts} />
           </div>
         </div>
       </Router>
