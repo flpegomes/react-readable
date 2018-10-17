@@ -65,10 +65,13 @@ class CategoryPosts extends Component {
 }
 
 function mapStateToProps(state) {
-
+    if(state.posts.listPosts == undefined) {
+        state.posts.listPosts = []
+    }
+    const arrayListPosts = Object.keys(state.posts.listPosts).map(id => state.posts.listPosts[id])   
     return {
       categories: state.categories,
-      posts: state.posts.listPosts,
+      posts: arrayListPosts,
       category: state.currentMenu.category,
       orderby: state.currentMenu.orderby
     }

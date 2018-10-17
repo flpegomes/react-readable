@@ -1,4 +1,6 @@
 import { orderByLists } from '../../utils/helpers'
+import { schema, normalize } from 'normalizr'
+import _ from 'lodash'
 
 const api = "http://localhost:3001"
 const headers = {
@@ -24,9 +26,7 @@ export const getPosts = (category, orderby) => {
         let url
         if(category === 'all') {
             url = `${api}/posts`
-        }
-        else 
-        {
+        } else {
             url = `${api}/${category}/posts`
         }
         fetch(url, {headers})
@@ -37,7 +37,13 @@ export const getPosts = (category, orderby) => {
                 return response
             })
         .then((response) => response.json())
-        .then((data) => dispatch(orderByPosts(orderby, data)))
+        .then((data) => orderByLists(orderby, data))
+        .then((data) => {
+            const postsSchema = new schema.Entity('posts')
+            const postsListSchema = [postsSchema]
+            const normalizedData = normalize(data, postsListSchema)
+            dispatch(fetchPosts(normalizedData.entities.posts))
+        })
     }
 }
 
@@ -64,6 +70,12 @@ export const orderByPosts = (orderby, posts) => {
     }
 }
 
+export const teste = (posts) => {
+    return {
+      type: 'TESTE', posts: posts
+    }
+}
+
 
 export const updatePostVote = (id, vote) => {
     return (dispatch) => {
@@ -85,7 +97,6 @@ export const updatePostVote = (id, vote) => {
         .catch((erro) => console.log(erro))
     }
 }
-
 
 export const updatePostList = (post) => {
     return {
