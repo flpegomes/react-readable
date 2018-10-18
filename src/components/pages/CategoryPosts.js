@@ -4,12 +4,16 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import PostList from '../post/PostList'
+import NewPost from '../post/NewPost'
 import Category from '../menu/Category'
 import OrderBy from '../menu/OrderBy'
 import { getCategories } from '../../modules/actions/categories'
 import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
 import { withRouter } from 'react-router-dom'
 import { getPosts } from '../../modules/actions/posts';
+import Typography from '@material-ui/core/Typography';
+import _ from 'lodash'
+
 
 
 const styles = {
@@ -20,7 +24,13 @@ const styles = {
       marginTop: 32,
       padding:32,
       maxWidth: 1000
-    },    
+    },
+    subtitle: {
+        fontSize: 12,
+        color: '#aaa',
+        flex: 1,
+        textAlign: 'right'
+    },
 }
 
 class CategoryPosts extends Component {
@@ -48,16 +58,24 @@ class CategoryPosts extends Component {
     render() {
         const { classes, categories, posts, category, orderby } = this.props 
         return (
-            <Paper className={classes.paper}>
-                <div style={{marginBottom: 8}}>
-                <OrderBy currentOrderby={orderby}/>
-                </div>
-                <Category key='all' currentCategory='all' name='everything' path={'/'} />
 
-                {categories.map((item) => (
-                    <Category key={item.path} currentCategory={category} name={item.name} path={item.path} />
-                ))}
-                
+            <Paper className={classes.paper}>
+                <div style={{display:'flex'}}>
+                    <div style={{marginBottom: 8, flex:1}}>
+                        <OrderBy currentOrderby={orderby}/>
+                    </div>
+
+                    <Typography variant='subtitle1' component="div" className={classes.subtitle}>
+                        SELECT FILTER
+                        <Category key='all' currentCategory='all' name='everything' path={'/'} />
+
+                        {categories.map((item) => (
+                            <Category key={item.path} currentCategory={category} name={item.name} path={item.path} />
+                        ))}
+                    </Typography>
+                </div>
+               
+                <NewPost />
                 <PostList posts={posts} category={category}/>
             </Paper>
         )
@@ -65,10 +83,11 @@ class CategoryPosts extends Component {
 }
 
 function mapStateToProps(state) {
-    if(state.posts.listPosts == undefined) {
+    if(state.posts.listPosts === undefined) {
         state.posts.listPosts = []
     }
-    const arrayListPosts = Object.keys(state.posts.listPosts).map(id => state.posts.listPosts[id])   
+    //const arrayListPosts = Object.keys(state.posts.listPosts).map(id => state.posts.listPosts[id]) 
+    const arrayListPosts = _.values(state.posts.listPosts)  
     return {
       categories: state.categories,
       posts: arrayListPosts,

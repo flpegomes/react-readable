@@ -11,6 +11,8 @@ import OrderBy from '../menu/OrderBy'
 import NewPost from '../post/NewPost'
 import { withRouter } from 'react-router-dom'
 import { getPosts } from '../../modules/actions/posts';
+import Typography from '@material-ui/core/Typography';
+import _ from 'lodash'
 
 
 
@@ -25,6 +27,12 @@ const styles = {
     },    
     chip: {
         marginRight: 16
+    },
+    subtitle: {
+        fontSize: 12,
+        color: '#aaa',
+        flex: 1,
+        textAlign: 'right'
     },
 
 }
@@ -51,15 +59,19 @@ class Home extends Component {
         return (
             <Paper className={classes.paper}>
                 
-                <div style={{marginBottom: 8, marginTop: 8 }}>
-                    <OrderBy currentOrderby={orderby}/>
-                </div>
-                <div>
-                    <Category key='all' currentCategory='everything' name='everything' path={'/'} />
+                <div style={{display:'flex'}}>
+                    <div style={{marginBottom: 8, flex:1}}>
+                        <OrderBy currentOrderby={orderby}/>
+                    </div>
 
-                    {categories.map((item) => (
-                        <Category key={item.path} name={item.name} path={item.path} />
-                    ))}
+                    <Typography variant='subtitle1' component="div" className={classes.subtitle}>
+                        SELECT FILTER
+                        <Category key='all' currentCategory='everything' name='everything' path={'/'} />
+
+                        {categories.map((item) => (
+                            <Category key={item.path} name={item.name} path={item.path} />
+                        ))}
+                    </Typography>
                 </div>
                 <NewPost />
 
@@ -72,10 +84,11 @@ class Home extends Component {
 }
 
 function mapStateToProps(state) {
-    if(state.posts.listPosts == undefined) {
+    if(state.posts.listPosts === undefined) {
          state.posts.listPosts = []
     }
-    const arrayListPosts = Object.keys(state.posts.listPosts).map(id => state.posts.listPosts[id])    
+    //const arrayListPosts = Object.keys(state.posts.listPosts).map(id => state.posts.listPosts[id]) 
+    const arrayListPosts = _.values(state.posts.listPosts)  
     return {
       categories: state.categories,
       posts: arrayListPosts,

@@ -1,6 +1,6 @@
 import { orderByLists } from '../../utils/helpers'
 import { schema, normalize } from 'normalizr'
-import _ from 'lodash'
+import uuidv4 from 'uuid'
 
 const api = "http://localhost:3001"
 const headers = {
@@ -12,6 +12,7 @@ export const FETCH_POSTS = 'FETCH_POSTS'
 export const ORDERBY_POSTS = 'ORDERBY_POSTS'
 export const RESET_POSTS = 'RESET_POSTS'
 export const UPDATE_POST_VOTE_SCORE_LIST = 'UPDATE_POST_VOTE_SCORE_LIST'
+export const UPDATE_POST_LIST = 'UPDATE_POST_LIST'
 
 
 function fetchPosts (posts) {
@@ -47,36 +48,6 @@ export const getPosts = (category, orderby) => {
     }
 }
 
-export const getPostDetail= (id) => {
-    return (dispatch) => {
-        fetch(`${api}/posts/${id}`, {headers})
-            .then((response) => {
-                if (!response.ok) {
-                throw Error(response.statusText)
-                }
-                return response
-            })
-        .then((response) => response.json())
-        .then((data) => dispatch(fetchPosts(data)))
-    }
-}
-
-
-
-export const orderByPosts = (orderby, posts) => {
-    const sortedPost = orderByLists(orderby, posts)
-    return {
-      type: ORDERBY_POSTS, posts: sortedPost, sortType: orderby
-    }
-}
-
-export const teste = (posts) => {
-    return {
-      type: 'TESTE', posts: posts
-    }
-}
-
-
 export const updatePostVote = (id, vote) => {
     return (dispatch) => {
         fetch(`${api}/posts/${id}`, {
@@ -93,14 +64,49 @@ export const updatePostVote = (id, vote) => {
             return response
         })
         .then((response) => response.json())
+        .then((response) => dispatch(updateVotePostList(response)))
+        .catch((erro) => console.log(erro))
+    }
+}
+
+export const newPost = (post) => {
+    return (dispatch) => {
+        fetch(`${api}/posts/`, {
+            method: 'POST', headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+              }, 
+            body: JSON.stringify({
+                id: uuidv4(),
+                timestamp: Date.now(),
+                title: post.title,
+                body: post.body,
+                author: post.author,
+                category: post.category
+            })
+        })
+        .then((response) => {
+            if(!response.ok) {
+                throw Error(response.statusText)
+            }
+            return response
+        })
+        .then((response) => response.json())
         .then((response) => dispatch(updatePostList(response)))
         .catch((erro) => console.log(erro))
     }
 }
 
-export const updatePostList = (post) => {
+export const updateVotePostList = (post) => {
     return {
       type: UPDATE_POST_VOTE_SCORE_LIST, 
+      post
+    }
+}
+
+export const updatePostList = (post) => {
+    return {
+      type: UPDATE_POST_LIST, 
       post
     }
 }

@@ -7,15 +7,20 @@ import Whatshot from '@material-ui/icons/Whatshot';
 import FiberNew from '@material-ui/icons/FiberNew';
 import { selectOrderBy } from '../../modules/actions/menu';
 import { connect } from 'react-redux'
+import Typography from '@material-ui/core/Typography';
 
 
 
 
 const styles = {
     chip: {
-        marginRight: 16,
+        marginLeft: 16,
         paddingLeft: 8,
         paddingRight: 8
+    },    
+    subtitle: {
+        fontSize: 12,
+        color: '#aaa'
     },
 
 }
@@ -32,21 +37,27 @@ class OrderBy extends Component {
         console.log(currentOrderby)
         return (
             <span>
-                <Chip
-                    icon={<Whatshot />}
-                    label='hot'
-                    onClick={() => this.handleClick('hot')}
-                    className={classes.chip}
-                    color={currentOrderby === 'hot' ? 'secondary' : 'default'}
-                />
 
-                <Chip
-                    icon={<FiberNew />}
-                    label='new'
-                    onClick={() => this.handleClick('new')}
-                    className={classes.chip}
-                    color={currentOrderby === 'new' ? 'secondary' : 'default'}
-                />
+                <Typography variant='subtitle1' component="div" className={classes.subtitle}>
+                    ORDER BY: 
+                
+                    <Chip
+                        icon={<FiberNew />}
+                        label='new'
+                        onClick={() => this.handleClick('new')}
+                        className={classes.chip}
+                        color={currentOrderby === 'new' ? 'secondary' : 'default'}
+                    />
+
+                    <Chip
+                        icon={<Whatshot />}
+                        label='hot'
+                        onClick={() => this.handleClick('hot')}
+                        className={classes.chip}
+                        color={currentOrderby === 'hot' ? 'secondary' : 'default'}
+                    />
+                </Typography>
+
             </span>
 
 

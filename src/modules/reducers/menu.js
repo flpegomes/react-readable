@@ -1,6 +1,6 @@
 import { CURRENT_CATEGORY, CURRENT_ORDERBY } from '../actions/menu'
 
-export default function currentMenu ( state = { orderby: 'hot' } , action) {
+export default function currentMenu ( state = { orderby: 'new' } , action) {
     switch(action.type) {
         case CURRENT_CATEGORY: 
             return {

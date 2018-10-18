@@ -15,7 +15,7 @@ import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import { formatDate, formatAvatar } from '../../utils/helpers'
-import { updatePostVote, getPosts } from '../../modules/actions/posts';
+import { updatePostVote } from '../../modules/actions/posts';
 
 
 
