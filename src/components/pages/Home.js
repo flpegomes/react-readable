@@ -8,6 +8,7 @@ import { getCategories } from '../../modules/actions/categories'
 import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
 import Category from '../menu/Category'
 import OrderBy from '../menu/OrderBy'
+import NewPost from '../post/NewPost'
 import { withRouter } from 'react-router-dom'
 import { getPosts } from '../../modules/actions/posts';
 
@@ -49,7 +50,8 @@ class Home extends Component {
         const { classes, categories, posts, orderby } = this.props  
         return (
             <Paper className={classes.paper}>
-                <div style={{marginBottom: 8}}>
+                
+                <div style={{marginBottom: 8, marginTop: 8 }}>
                     <OrderBy currentOrderby={orderby}/>
                 </div>
                 <div>
@@ -59,7 +61,8 @@ class Home extends Component {
                         <Category key={item.path} name={item.name} path={item.path} />
                     ))}
                 </div>
-                
+                <NewPost />
+
                 <PostList posts={posts} />
                 
                 
