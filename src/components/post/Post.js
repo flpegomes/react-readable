@@ -16,6 +16,10 @@ import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import { formatDate, formatAvatar } from '../../utils/helpers'
 import { updatePostVote } from '../../modules/actions/posts';
+import { Link, withRouter } from 'react-router-dom'
+import CardActionArea from '@material-ui/core/CardActionArea';
+
+
 
 
 
@@ -75,6 +79,7 @@ class Post extends Component {
     render() {
         
         const { classes, post } = this.props   
+        console.log(post)
         return (                
                 <Card raised={false} className={classes.card}>
                     <CardHeader
@@ -106,15 +111,22 @@ class Post extends Component {
                                 </Typography>
                             }
                     />
+                    <CardActionArea
+                        component={Link}
+                        to={`/${post.category}/${post.id}`}
+                    >
                         
-                    <CardContent>
-                        <Typography variant='h6' component="p">
-                            {post.title}
-                        </Typography>
-                        <Typography variant='subtitle1' component="p">
-                            {post.body}
-                        </Typography>
-                    </CardContent>
+                        <CardContent>
+                            <Typography variant='h6' component="p">
+                                {post.title}
+                            </Typography>
+                            <Typography variant='subtitle1' component="p">
+                                {post.body}
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                        
+                    
                     <CardActions className={classes.actions}>
                         <div className={classes.grow}>
                             <IconButton aria-label="like" onClick={() => this.handleVote(post.id, 'upVote')}>

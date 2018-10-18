@@ -94,6 +94,16 @@ class NewPost extends Component {
 
     addPost = post => {
         this.props.dispatch(newPost(post))
+        this.setState({
+            newpost: {
+                title: '',
+                body: '',
+                category: '',
+                author: 'flpegomes'
+            }
+        })
+
+
     }
     
     _verifyFields = (countTitle, countBody) => {
@@ -157,7 +167,7 @@ class NewPost extends Component {
                                     id="standard-name"
                                     label="Enter a title for your post"
                                     className={classes.textField}
-                                    value={this.state.title}
+                                    value={title}
                                     onChange={this.handleChange('title')}
                                     margin="normal"
                                     variant="filled"
@@ -193,7 +203,6 @@ class NewPost extends Component {
                                             className={classes.chip}
                                             color={category === 'react' ? 'primary' : 'default'}
                                             onClick={() => this.handleCategory('react')}
-
                                         />
                                         <Chip
                                             label='redux'
@@ -206,7 +215,6 @@ class NewPost extends Component {
                                             className={classes.chip}
                                             color={category === 'udacity' ? 'primary' : 'default'}
                                             onClick={() => this.handleCategory('udacity')}
-
                                         />
                                     </Typography>
                                 </div>
@@ -215,8 +223,8 @@ class NewPost extends Component {
                                     id="standard-body"
                                     label="type your post"
                                     placeholder="write anything here..."
-                                    value={this.state.body}
                                     onChange={this.handleChange('body')}
+                                    value={body}
                                     margin="normal"
                                     variant="filled"
                                     fullWidth

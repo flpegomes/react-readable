@@ -1,4 +1,4 @@
-import { FETCH_POSTS, RESET_POSTS, ORDERBY_POSTS, UPDATE_POST_VOTE_SCORE_LIST, UPDATE_POST_LIST } from '../actions/posts'
+import { FETCH_POSTS, RESET_POSTS, ORDERBY_POSTS, UPDATE_POST_VOTE_SCORE_LIST, UPDATE_POST_LIST, FETCH_POST } from '../actions/posts'
 
 export default function post ( state = [] , action) {
     switch(action.type) {
@@ -16,12 +16,11 @@ export default function post ( state = [] , action) {
                 orderby: action.sortType,
                 activePost: ''
             } 
-        case 'TESTE':
+        case FETCH_POST:
+        console.log(action.post)
             return {
                 ...state,
-                listPosts: action.posts,
-                orderby: '',
-                activePost: ''
+                postDetail: action.post
             } 
         case UPDATE_POST_VOTE_SCORE_LIST:
             return {

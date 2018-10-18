@@ -9,6 +9,7 @@ const headers = {
 }
 
 export const FETCH_POSTS = 'FETCH_POSTS'
+export const FETCH_POST = 'FETCH_POST'
 export const ORDERBY_POSTS = 'ORDERBY_POSTS'
 export const RESET_POSTS = 'RESET_POSTS'
 export const UPDATE_POST_VOTE_SCORE_LIST = 'UPDATE_POST_VOTE_SCORE_LIST'
@@ -45,6 +46,21 @@ export const getPosts = (category, orderby) => {
             const normalizedData = normalize(data, postsListSchema)
             dispatch(fetchPosts(normalizedData.entities.posts))
         })
+    }
+}
+
+export const getPostDetail = (postId) => {
+    return (dispatch) => {
+        let url = `${api}/posts/${postId}`
+        fetch(url, {headers})
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText)
+                }
+                return response
+            })
+        .then((response) => response.json())
+        .then((data) =>  dispatch(fetchPost(data)))
     }
 }
 
@@ -108,5 +124,12 @@ export const updatePostList = (post) => {
     return {
       type: UPDATE_POST_LIST, 
       post
+    }
+}
+
+export const fetchPost = (post) => {
+    return {
+        type: FETCH_POST,
+        post
     }
 }
