@@ -6,20 +6,16 @@ export default function post ( state = [] , action) {
             return {
                 ...state,
                 listPosts: action.posts,
-                orderby: action.sortType,
-                activePost: ''
             }  
         case ORDERBY_POSTS: 
             return {
                 ...state,
                 listPosts: action.posts,
-                orderby: action.sortType,
-                activePost: ''
             } 
         case FETCH_POST:
             return {
                 ...state,
-                postDetail: action.post
+                post: action.post
             } 
         case UPDATE_POST_VOTE_SCORE_LIST:
             return {
@@ -29,7 +25,8 @@ export default function post ( state = [] , action) {
                     [action.post.id]: {
                         ...action.post
                     }
-                }
+                },
+                post: action.post
             }
         case UPDATE_POST_LIST:
             return {
@@ -37,7 +34,6 @@ export default function post ( state = [] , action) {
                 listPosts: {
                     [action.post.id] : action.post,
                     ...state.listPosts,
-                    
                 }
             }
         case RESET_POSTS:

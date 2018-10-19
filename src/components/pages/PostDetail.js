@@ -8,7 +8,9 @@ import Category from '../menu/Category'
 import OrderBy from '../menu/OrderBy'
 import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
 import { withRouter } from 'react-router-dom'
-import { getPostDetail, getPosts } from '../../modules/actions/posts';
+import { getPostDetail, getPostComments } from '../../modules/actions/posts';
+import { getCategories } from '../../modules/actions/categories'
+
 import Typography from '@material-ui/core/Typography';
 import _ from 'lodash'
 
@@ -36,10 +38,11 @@ class PostDetail extends Component {
     componentDidMount() {
         const category = this.props.match.params.category
         const postId = this.props.match.params.post_id
+        this.props.dispatch(getCategories());
         this.props.dispatch(selectCategory(category));
         this.props.dispatch(selectOrderBy(this.props.orderby))
-
-        
+        this.props.dispatch(getPostDetail(postId)) 
+        this.props.dispatch(getPostComments(postId))
     }
 
     componentWillReceiveProps(nextProps) {
@@ -73,21 +76,20 @@ class PostDetail extends Component {
                         ))}
                     </Typography>
                 </div>
-               
-                <Post post={post} />
+                {post !== undefined && (
+                    <Post post={post} />                
+                )}
             </Paper>
         )
     }
 }
 
-function mapStateToProps(state, ownProps) {
-
-    const postId = ownProps.match.params.post_id
-    const post = state.posts.listPosts[postId];
+function mapStateToProps(state) {
+    console.log(state)
     
     return {
       categories: state.categories,
-      post,
+      post: state.posts.post,
       category: state.currentMenu.category,
       orderby: state.currentMenu.orderby
     }

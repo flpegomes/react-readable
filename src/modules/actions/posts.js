@@ -55,12 +55,12 @@ export const getPostDetail = (postId) => {
         fetch(url, {headers})
             .then((response) => {
                 if (!response.ok) {
-                    throw Error(response.statusText)
+                    console.log(response)
                 }
                 return response
             })
         .then((response) => response.json())
-        .then((data) =>  dispatch(fetchPost(data)))
+        .then((data) => dispatch(fetchPost(data)))
     }
 }
 
@@ -91,7 +91,7 @@ export const newPost = (post) => {
             method: 'POST', headers: {
                 ...headers,
                 'Content-Type': 'application/json'
-              }, 
+            }, 
             body: JSON.stringify({
                 id: uuidv4(),
                 timestamp: Date.now(),
@@ -131,5 +131,20 @@ export const fetchPost = (post) => {
     return {
         type: FETCH_POST,
         post
+    }
+}
+
+export const getPostComments = (postId) => {
+    return (dispatch) => {
+        let url = `${api}/posts/${postId}/comments`
+        fetch(url, {headers})
+            .then((response) => {
+                if (!response.ok) {
+                    console.log(response)
+                }
+                return response
+            })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
     }
 }
