@@ -17,7 +17,6 @@ export default function post ( state = [] , action) {
                 activePost: ''
             } 
         case FETCH_POST:
-        console.log(action.post)
             return {
                 ...state,
                 postDetail: action.post

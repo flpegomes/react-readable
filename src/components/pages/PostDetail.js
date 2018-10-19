@@ -8,7 +8,7 @@ import Category from '../menu/Category'
 import OrderBy from '../menu/OrderBy'
 import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
 import { withRouter } from 'react-router-dom'
-import { getPostDetail } from '../../modules/actions/posts';
+import { getPostDetail, getPosts } from '../../modules/actions/posts';
 import Typography from '@material-ui/core/Typography';
 import _ from 'lodash'
 
@@ -33,15 +33,12 @@ const styles = {
 
 class PostDetail extends Component {
     
-    componentWillMount() {
-        const postId = this.props.match.params.post_id
-        this.props.dispatch(getPostDetail(postId));
-    }
     componentDidMount() {
         const category = this.props.match.params.category
         const postId = this.props.match.params.post_id
         this.props.dispatch(selectCategory(category));
         this.props.dispatch(selectOrderBy(this.props.orderby))
+
         
     }
 
@@ -77,17 +74,20 @@ class PostDetail extends Component {
                     </Typography>
                 </div>
                
-                <Post post={post}/>
+                <Post post={post} />
             </Paper>
         )
     }
 }
 
-function mapStateToProps(state) {
-    console.log(state)
+function mapStateToProps(state, ownProps) {
+
+    const postId = ownProps.match.params.post_id
+    const post = state.posts.listPosts[postId];
+    
     return {
       categories: state.categories,
-      post: state.posts.postDetail,
+      post,
       category: state.currentMenu.category,
       orderby: state.currentMenu.orderby
     }
