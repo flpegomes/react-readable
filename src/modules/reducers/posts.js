@@ -4,7 +4,9 @@ import {    FETCH_POSTS,
             UPDATE_POST_VOTE_SCORE_LIST,
             UPDATE_POST_LIST, 
             FETCH_POST,
-            MERGE_COMMENTS
+            MERGE_COMMENTS,
+            UPDATE_COMMENT_VOTE_SCORE_LIST,
+            UPDATE_COMMENT_LIST
 } from '../actions/posts'
 
 export default function post ( state = [] , action) {
@@ -28,15 +30,38 @@ export default function post ( state = [] , action) {
                 }
             } 
         case UPDATE_POST_VOTE_SCORE_LIST:
+            if(state.post.replies === undefined) {
+                state.post.replies = []
+            }
             return {
                 ...state,
                 listPosts: {
                     ...state.listPosts,
                     [action.post.id]: {
-                        ...action.post
+                        ...action.post,
+                        replies: {
+                            ...state.post.replies
+                        }
                     }
                 },
-                post: action.post
+                post: {
+                    ...action.post,
+                    replies: {
+                        ...state.post.replies
+                    }
+                }
+            }
+        case UPDATE_COMMENT_VOTE_SCORE_LIST:
+        console.log(state)
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    replies: {
+                        ...state.post.replies,
+                        [action.comment.id]: action.comment
+                    }
+                }
             }
         case MERGE_COMMENTS:
             return {
@@ -52,6 +77,17 @@ export default function post ( state = [] , action) {
                 listPosts: {
                     [action.post.id] : action.post,
                     ...state.listPosts,
+                }
+            }
+        case UPDATE_COMMENT_LIST: 
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    replies: {
+                        ...state.post.replies,
+                        [action.comment.id] : action.comment,
+                    }
                 }
             }
         case RESET_POSTS:

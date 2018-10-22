@@ -4,13 +4,17 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import Post from '../post/Post'
+import Comment from '../post/Comment'
 import Category from '../menu/Category'
 import OrderBy from '../menu/OrderBy'
 import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
 import { withRouter } from 'react-router-dom'
-import { getPostDetail, getPostComments } from '../../modules/actions/posts';
+import { getPostDetail } from '../../modules/actions/posts';
 import { getCategories } from '../../modules/actions/categories'
 import Typography from '@material-ui/core/Typography';
+import _ from 'lodash'
+import NewComment from '../post/NewComment'
+
 
 
 
@@ -38,15 +42,17 @@ class PostDetail extends Component {
         const postId = this.props.match.params.post_id
         this.props.dispatch(getCategories());
         this.props.dispatch(selectCategory(category));
-        this.props.dispatch(selectOrderBy(this.props.orderby))
-        this.props.dispatch(getPostDetail(postId)) 
+        this.props.dispatch(selectOrderBy('hot'))
+        this.props.dispatch(getPostDetail(postId, 'hot')) 
     }
 
     componentWillReceiveProps(nextProps) {
         const newCategory = nextProps.match.params.category
+        const postId = this.props.match.params.post_id
+
         if((this.props.category !== newCategory) || this.props.orderby !== nextProps.orderby) {
             this.props.dispatch(selectCategory(newCategory))
-            //this.props.dispatch(getPostDetail(postId));
+            this.props.dispatch(getPostDetail(postId, nextProps.orderby));
         }
         
     }
@@ -55,7 +61,7 @@ class PostDetail extends Component {
   
 
     render() {
-        const { classes, categories, post, category, orderby } = this.props 
+        const { classes, categories, post, category, orderby, comments } = this.props 
         return (
 
             <Paper className={classes.paper}>
@@ -73,12 +79,15 @@ class PostDetail extends Component {
                         ))}
                     </Typography>
                 </div>
-
                 {post !== undefined && (
                     <div>
                         <Post post={post} />
-                        {post.replies.map((reply) => 
-                            <Post key={reply.id} post={reply} />
+                        <NewComment parentId={this.props.parentId} />
+                        {comments.map((reply) => 
+                            <Comment 
+                                key={reply.id} 
+                                post={reply}                         
+                            />
                         )}
                     </div>
                 )}
@@ -92,11 +101,17 @@ class PostDetail extends Component {
     }
 }
 
-function mapStateToProps(state) {
-   
+function mapStateToProps(state, params) {
+    const parentId = params.match.params.post_id
+    if(state.posts.post === undefined) {
+        state.posts.post = []
+    } 
+    const comments = _.values(state.posts.post.replies)
     return {
+      parentId,
       categories: state.categories,
       post: state.posts.post,
+      comments,
       category: state.currentMenu.category,
       orderby: state.currentMenu.orderby
     }

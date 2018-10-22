@@ -32,7 +32,8 @@ const styles = {
     },
     card: {
         marginTop: 16,
-        backgroundColor:'#F4F4F4'
+        backgroundColor:'#F4F4F4',
+        marginBottom: 16
     },
     avatar: {
         backgroundColor: '#0277bd',

@@ -25,7 +25,6 @@ class Category extends Component {
                 <Chip
                     key={path}
                     label={name}
-                    //onClick={handleClick}
                     className={classes.chip}
                     component={Link}
                     to={path === '/' ? '/' : `/${path}`}
