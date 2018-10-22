@@ -34,7 +34,6 @@ class OrderBy extends Component {
     render() {
         
         const { classes, currentOrderby } = this.props   
-        console.log(currentOrderby)
         return (
             <span>
 

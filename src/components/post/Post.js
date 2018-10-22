@@ -16,7 +16,7 @@ import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import { formatDate, formatAvatar } from '../../utils/helpers'
 import { updatePostVote } from '../../modules/actions/posts';
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import CardActionArea from '@material-ui/core/CardActionArea';
 
 
@@ -79,7 +79,6 @@ class Post extends Component {
     render() {
         
         const { classes, post } = this.props   
-        console.log(post)
         return (                
                 <Card raised={false} className={classes.card}>
                     <CardHeader

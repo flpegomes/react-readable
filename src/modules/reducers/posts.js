@@ -1,4 +1,11 @@
-import { FETCH_POSTS, RESET_POSTS, ORDERBY_POSTS, UPDATE_POST_VOTE_SCORE_LIST, UPDATE_POST_LIST, FETCH_POST } from '../actions/posts'
+import {    FETCH_POSTS, 
+            RESET_POSTS, 
+            ORDERBY_POSTS, 
+            UPDATE_POST_VOTE_SCORE_LIST,
+            UPDATE_POST_LIST, 
+            FETCH_POST,
+            MERGE_COMMENTS
+} from '../actions/posts'
 
 export default function post ( state = [] , action) {
     switch(action.type) {
@@ -15,7 +22,10 @@ export default function post ( state = [] , action) {
         case FETCH_POST:
             return {
                 ...state,
-                post: action.post
+                post: {
+                    ...action.post,
+                    replies: []
+                }
             } 
         case UPDATE_POST_VOTE_SCORE_LIST:
             return {
@@ -28,6 +38,14 @@ export default function post ( state = [] , action) {
                 },
                 post: action.post
             }
+        case MERGE_COMMENTS:
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    replies: action.comments
+                }
+            } 
         case UPDATE_POST_LIST:
             return {
                 ...state,

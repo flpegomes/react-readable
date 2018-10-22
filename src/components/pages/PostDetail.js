@@ -10,9 +10,7 @@ import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
 import { withRouter } from 'react-router-dom'
 import { getPostDetail, getPostComments } from '../../modules/actions/posts';
 import { getCategories } from '../../modules/actions/categories'
-
 import Typography from '@material-ui/core/Typography';
-import _ from 'lodash'
 
 
 
@@ -42,7 +40,6 @@ class PostDetail extends Component {
         this.props.dispatch(selectCategory(category));
         this.props.dispatch(selectOrderBy(this.props.orderby))
         this.props.dispatch(getPostDetail(postId)) 
-        this.props.dispatch(getPostComments(postId))
     }
 
     componentWillReceiveProps(nextProps) {
@@ -76,17 +73,27 @@ class PostDetail extends Component {
                         ))}
                     </Typography>
                 </div>
+
                 {post !== undefined && (
-                    <Post post={post} />                
+                    <div>
+                        <Post post={post} />
+                        {post.replies.map((reply) => 
+                            <Post key={reply.id} post={reply} />
+                        )}
+                    </div>
                 )}
+                
+                
+
+                
+                
             </Paper>
         )
     }
 }
 
 function mapStateToProps(state) {
-    console.log(state)
-    
+   
     return {
       categories: state.categories,
       post: state.posts.post,

@@ -14,6 +14,7 @@ export const ORDERBY_POSTS = 'ORDERBY_POSTS'
 export const RESET_POSTS = 'RESET_POSTS'
 export const UPDATE_POST_VOTE_SCORE_LIST = 'UPDATE_POST_VOTE_SCORE_LIST'
 export const UPDATE_POST_LIST = 'UPDATE_POST_LIST'
+export const MERGE_COMMENTS = 'MERGE_COMMENTS'
 
 
 function fetchPosts (posts) {
@@ -61,6 +62,7 @@ export const getPostDetail = (postId) => {
             })
         .then((response) => response.json())
         .then((data) => dispatch(fetchPost(data)))
+        .then(() => dispatch(getPostComments(postId)))
     }
 }
 
@@ -145,6 +147,14 @@ export const getPostComments = (postId) => {
                 return response
             })
         .then((response) => response.json())
-        .then((data) => console.log(data))
+        .then((data) => dispatch(mergePostComments(data)))
+        
+    }   
+}
+
+export const mergePostComments = (comments) => {
+    return {
+        type: MERGE_COMMENTS,
+        comments
     }
 }

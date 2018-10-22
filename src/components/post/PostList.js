@@ -24,7 +24,6 @@ class PostList extends Component {
 
     render() {
         const { posts } = this.props;
-        console.log(posts)
         if(posts) {
             return (        
                 <div>
