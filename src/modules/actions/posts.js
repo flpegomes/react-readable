@@ -15,7 +15,6 @@ export const RESET_POSTS = 'RESET_POSTS'
 export const UPDATE_POST_VOTE_SCORE_LIST = 'UPDATE_POST_VOTE_SCORE_LIST'
 export const UPDATE_POST_LIST = 'UPDATE_POST_LIST'
 export const MERGE_COMMENTS = 'MERGE_COMMENTS'
-export const UPDATE_COMMENT_VOTE_SCORE_LIST = 'UPDATE_COMMENT_VOTE_SCORE_LIST'
 export const UPDATE_COMMENT_LIST = 'UPDATE_COMMENT_LIST'
 
 
@@ -52,7 +51,7 @@ export const getPosts = (category, orderby) => {
     }
 }
 
-export const getPostDetail = (postId, orderby) => {
+export const getPostDetail = (postId) => {
     return (dispatch) => {
         let url = `${api}/posts/${postId}`
         fetch(url, {headers})
@@ -64,7 +63,7 @@ export const getPostDetail = (postId, orderby) => {
             })
         .then((response) => response.json())
         .then((data) => dispatch(fetchPost(data)))
-        .then(() => dispatch(getPostComments(postId, orderby)))
+        .then(() => dispatch(getPostComments(postId)))
     }
 }
 
@@ -174,7 +173,7 @@ export const updateVotePostList = (post) => {
 
 export const updateVoteCommentList = (comment) => {
     return {
-      type: UPDATE_COMMENT_VOTE_SCORE_LIST, 
+      type: UPDATE_COMMENT_LIST, 
       comment
     }
 }
@@ -199,7 +198,7 @@ export const fetchPost = (post) => {
     }
 }
 
-export const getPostComments = (postId, orderby) => {
+export const getPostComments = (postId) => {
     return (dispatch) => {
         let url = `${api}/posts/${postId}/comments`
         fetch(url, {headers})
@@ -210,7 +209,7 @@ export const getPostComments = (postId, orderby) => {
                 return response
             })
         .then((response) => response.json())
-        .then((data) => orderByLists(orderby, data))
+        //.then((data) => orderByLists(orderby, data))
         .then((data) => {
             const commentsSchema = new schema.Entity('comments')
             const commentsListSchema = [commentsSchema]
@@ -221,6 +220,49 @@ export const getPostComments = (postId, orderby) => {
         
     }   
 }
+
+export const deleteComment = (commentId, parentId) => {
+    return (dispatch) => {
+        fetch(`${api}/comments/${commentId}`, {
+            method: 'PUT', headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify({deleted: true })
+        })
+        .then((response) => {
+            if(!response.ok) {
+                throw Error(response.statusText)
+            }
+            return response
+        })
+        .then((response) => response.json())
+        .then((response) => dispatch(getPostComments(parentId)))
+        .catch((erro) => console.log(erro))
+    }
+}
+
+export const editComment = (commentId, body) => {
+    return (dispatch) => {
+        fetch(`${api}/comments/${commentId}`, {
+            method: 'PUT', headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify({body: body, timestamp: Date.now() })
+        })
+        .then((response) => {
+            if(!response.ok) {
+                throw Error(response.statusText)
+            }
+            return response
+        })
+        .then((response) => response.json())
+        .then((response) => dispatch(updateCommentList(response)))
+        .catch((erro) => console.log(erro))
+    }
+}
+
 
 export const mergePostComments = (comments) => {
     return {

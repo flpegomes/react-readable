@@ -5,7 +5,6 @@ import {    FETCH_POSTS,
             UPDATE_POST_LIST, 
             FETCH_POST,
             MERGE_COMMENTS,
-            UPDATE_COMMENT_VOTE_SCORE_LIST,
             UPDATE_COMMENT_LIST
 } from '../actions/posts'
 
@@ -48,18 +47,6 @@ export default function post ( state = [] , action) {
                     ...action.post,
                     replies: {
                         ...state.post.replies
-                    }
-                }
-            }
-        case UPDATE_COMMENT_VOTE_SCORE_LIST:
-        console.log(state)
-            return {
-                ...state,
-                post: {
-                    ...state.post,
-                    replies: {
-                        ...state.post.replies,
-                        [action.comment.id]: action.comment
                     }
                 }
             }

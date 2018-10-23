@@ -18,12 +18,8 @@ import { formatDate, formatAvatar } from '../../utils/helpers'
 import { updatePostVote } from '../../modules/actions/posts';
 import { Link } from 'react-router-dom'
 import CardActionArea from '@material-ui/core/CardActionArea';
-
-
-
-
-
-
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = {
     paper: {
@@ -72,13 +68,30 @@ const styles = {
 
 class Post extends Component {
 
+    /**
+     *  método para voto em postagem
+     */
     handleVote = (id, vote) => {
         this.props.dispatch(updatePostVote(id, vote))
     }
     
+    state = {
+        anchorEl: null,
+    };
+
+    handleClick = event => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
+
+    handleClose = () => {
+        this.setState({ anchorEl: null });
+    };
+    
+
     render() {
         
         const { classes, post } = this.props   
+        const { anchorEl } = this.state;
         return (                
                 <Card raised={false} className={classes.card}>
                     <CardHeader
@@ -95,9 +108,22 @@ class Post extends Component {
                                     color='primary'
                                 />
                                 <IconButton>
-                                    <MoreVertIcon />
+                                    <MoreVertIcon
+                                        aria-owns={anchorEl ? 'simple-menu' : null}
+                                        aria-haspopup="true"
+                                        onClick={this.handleClick}
+                                    />
                                 </IconButton>
-                                </div>
+                                <Menu
+                                    id="simple-menu"
+                                    anchorEl={anchorEl}
+                                    open={Boolean(anchorEl)}
+                                    onClose={this.handleClose}
+                                >
+                                    <MenuItem onClick={this.handleClose}>Edit</MenuItem>
+                                    <MenuItem onClick={this.handleClose}>Delete</MenuItem>
+                                </Menu>
+                            </div>
                         }
                         title={
                                 <Typography variant='h6' component="p" className={classes.title}>
@@ -114,7 +140,6 @@ class Post extends Component {
                         component={Link}
                         to={`/${post.category}/${post.id}`}
                     >
-                        
                         <CardContent>
                             <Typography variant='h6' component="p">
                                 {post.title}

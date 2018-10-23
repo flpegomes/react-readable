@@ -14,6 +14,8 @@ import { getCategories } from '../../modules/actions/categories'
 import Typography from '@material-ui/core/Typography';
 import _ from 'lodash'
 import NewComment from '../post/NewComment'
+import { orderByLists } from '../../utils/helpers'
+
 
 
 
@@ -43,7 +45,7 @@ class PostDetail extends Component {
         this.props.dispatch(getCategories());
         this.props.dispatch(selectCategory(category));
         this.props.dispatch(selectOrderBy('hot'))
-        this.props.dispatch(getPostDetail(postId, 'hot')) 
+        this.props.dispatch(getPostDetail(postId)) 
     }
 
     componentWillReceiveProps(nextProps) {
@@ -52,7 +54,7 @@ class PostDetail extends Component {
 
         if((this.props.category !== newCategory) || this.props.orderby !== nextProps.orderby) {
             this.props.dispatch(selectCategory(newCategory))
-            this.props.dispatch(getPostDetail(postId, nextProps.orderby));
+            this.props.dispatch(getPostDetail(postId));
         }
         
     }
@@ -83,10 +85,10 @@ class PostDetail extends Component {
                     <div>
                         <Post post={post} />
                         <NewComment parentId={this.props.parentId} />
-                        {comments.map((reply) => 
+                        {comments.map((reply, i) => 
                             <Comment 
                                 key={reply.id} 
-                                post={reply}                         
+                                comment={reply}                         
                             />
                         )}
                     </div>
@@ -106,7 +108,8 @@ function mapStateToProps(state, params) {
     if(state.posts.post === undefined) {
         state.posts.post = []
     } 
-    const comments = _.values(state.posts.post.replies)
+    const comments = orderByLists(state.currentMenu.orderby, _.values(state.posts.post.replies))
+    
     return {
       parentId,
       categories: state.categories,

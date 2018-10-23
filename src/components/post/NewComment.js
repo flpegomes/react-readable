@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
@@ -114,6 +113,7 @@ class NewComment extends Component {
             author: 'flpegomes', 
             parentId: this.props.parentId
         },
+        isEditing: false
 
     };
     render() {
@@ -131,7 +131,6 @@ class NewComment extends Component {
                                         NEW COMMENT
                             </Typography>
                             <div style={{flexWrap: 'wrap', display: 'flex'}}>
-                            
                                 <TextField
                                     id="standard-body"
                                     label="type your post"
