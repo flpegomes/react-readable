@@ -1,7 +1,6 @@
 import {    FETCH_POSTS, 
             RESET_POSTS, 
-            ORDERBY_POSTS, 
-            UPDATE_POST_VOTE_SCORE_LIST,
+            UPDATE_POST,
             UPDATE_POST_LIST, 
             FETCH_POST,
             MERGE_COMMENTS,
@@ -15,39 +14,28 @@ export default function post ( state = [] , action) {
                 ...state,
                 listPosts: action.posts,
             }  
-        case ORDERBY_POSTS: 
-            return {
-                ...state,
-                listPosts: action.posts,
-            } 
         case FETCH_POST:
             return {
                 ...state,
                 post: {
+                    ...state.post,
                     ...action.post,
-                    replies: []
+                    
                 }
             } 
-        case UPDATE_POST_VOTE_SCORE_LIST:
-            if(state.post.replies === undefined) {
-                state.post.replies = []
-            }
+        case UPDATE_POST:
             return {
                 ...state,
                 listPosts: {
                     ...state.listPosts,
                     [action.post.id]: {
                         ...action.post,
-                        replies: {
-                            ...state.post.replies
-                        }
+                        
                     }
                 },
                 post: {
+                    ...state.post,
                     ...action.post,
-                    replies: {
-                        ...state.post.replies
-                    }
                 }
             }
         case MERGE_COMMENTS:

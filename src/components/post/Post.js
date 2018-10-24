@@ -15,7 +15,7 @@ import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import { formatDate, formatAvatar } from '../../utils/helpers'
-import { updatePostVote } from '../../modules/actions/posts';
+import { updatePostVote, editPost } from '../../modules/actions/posts';
 import { Link } from 'react-router-dom'
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Menu from '@material-ui/core/Menu';
@@ -66,6 +66,11 @@ const styles = {
     title: {
         fontSize: 16,
         color: '#444'
+    }, 
+    button: {
+        marginTop: 16,
+        elevation: 0,
+        marginLeft: 8
     }
     
 }
@@ -87,9 +92,14 @@ class Post extends Component {
         this.setState({ anchorEl: event.currentTarget });
     };
 
+    
+    handleCancelEdit = () => {
+        this.setState({ ...this.state, isEditing: false, anchorEl: null });
+    };
+
     handleChange = name => event => {
         this.setState({
-            editPost: { ...this.state, [name]: event.target.value }
+            contentPost: { ...this.state.contentPost, [name]: event.target.value }
         });
     };
 
@@ -97,7 +107,7 @@ class Post extends Component {
         this.setState({ 
             isEditing: true,
             anchorEl: null,
-            editPost: {
+            contentPost: {
                 title: post.title,
                 body: post.body
             }
@@ -107,10 +117,14 @@ class Post extends Component {
     state = {
         isEditing: false,
         anchorEl: null,
-        editPost : {
+        contentPost : {
             title: '',
             body: ''
         }
+    }
+    editPost = (postId, content) => {
+        this.props.dispatch(editPost(postId, content))
+        this.setState({ ...this.state, isEditing: false, anchorEl: null });
     }
 
     _verifyFields = (countTitle, countBody) => {
@@ -128,11 +142,10 @@ class Post extends Component {
     render() {
         
         const { classes, post } = this.props   
-        const { anchorEl, isEditing } = this.state;
-        const { title, body } = this.state.editPost
-        const countBody = 300 - body.length;
-        const countTitle = 50 - title.length;
-
+        const { anchorEl, isEditing, contentPost } = this.state;
+        const { title, body } = this.state.contentPost
+        const countBody = 300 - body.length
+        const countTitle = 50 - title.length
         return (                
                 <Card raised={false} className={classes.card}>
                     <CardHeader
@@ -178,6 +191,7 @@ class Post extends Component {
                             }
                     />
                     {isEditing ? (
+                        <form>
                         <CardContent>
                             <div style={{margin: 16}}>
                                 <div style={{flexWrap: 'wrap', display: 'flex'}}>
@@ -250,20 +264,33 @@ class Post extends Component {
                                         error={countBody < 0 ? true : false}
                                     />
 
-                                    <Button 
-                                        variant="contained" 
-                                        color="primary" 
-                                        className={classes.button} 
-                                        disabled={this._verifyFields(countTitle, countBody)}
-                                        onClick={() => {}}
-                                    >
-                                        SEND
-                                    </Button>
+                                   <div style={{display: 'flex', flex:1 }}>
+                                            <div style={{marginLeft: 'auto'}}>
+                                            <Button 
+                                                variant="contained" 
+                                                color="secondary" 
+                                                className={classes.button} 
+                                                onClick={() => this.handleCancelEdit()}
+                                            >
+                                                CANCEL
+                                            </Button>
+                                            <Button 
+                                                variant="contained" 
+                                                color="primary" 
+                                                className={classes.button} 
+                                                disabled={this._verifyFields(countTitle, countBody)}
+                                                onClick={() => this.editPost(post.id, contentPost)}
+                                            >
+                                                SEND
+                                            </Button>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                             
                             
                         </CardContent>
+                        </form>
                     ) : ( 
                         <CardActionArea
                             component={Link}

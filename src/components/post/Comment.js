@@ -96,7 +96,7 @@ class Comment extends Component {
 
     handleChange = name => event => {
         this.setState({
-            editComment: { ...this.state, [name]: event.target.value }
+            contentComment: { ...this.state, [name]: event.target.value }
         });
     };
 
@@ -120,7 +120,7 @@ class Comment extends Component {
     state = {
         anchorEl: null,
         isEditing: false,
-        editComment: {
+        contentComment: {
             body: this.props.comment.body
         }
     };
@@ -129,7 +129,7 @@ class Comment extends Component {
         
         const { classes, comment, } = this.props 
         const { anchorEl, isEditing } = this.state
-        const { body } = this.state.editComment
+        const { body } = this.state.contentComment
         const countBody = 300 - body.length
         return (               
                 <Card raised={false} className={classes.card}>
@@ -208,26 +208,26 @@ class Comment extends Component {
                                                 
                                                 error={countBody < 0 ? true : false}
                                             />
-                                        <div style={{display: 'flex'}}>
+                                        <div style={{display: 'flex' }}>
                                             <div style={{marginLeft: 'auto'}}>
-                                            <Button 
-                                                variant="contained" 
-                                                color="secondary" 
-                                                className={classes.button} 
-                                                disabled={this._verifyFields(countBody)}
-                                                onClick={() => this.handleCancelEdit()}
-                                            >
-                                                CANCEL
-                                            </Button>
-                                            <Button 
-                                                variant="contained" 
-                                                color="primary" 
-                                                className={classes.button} 
-                                                disabled={this._verifyFields(countBody)}
-                                                onClick={() => this.editComment(comment.id, body)}
-                                            >
-                                                SEND
-                                            </Button>
+                                                <Button 
+                                                    variant="contained" 
+                                                    color="secondary" 
+                                                    className={classes.button} 
+                                                    disabled={this._verifyFields(countBody)}
+                                                    onClick={() => this.handleCancelEdit()}
+                                                >
+                                                    CANCEL
+                                                </Button>
+                                                <Button 
+                                                    variant="contained" 
+                                                    color="primary" 
+                                                    className={classes.button} 
+                                                    disabled={this._verifyFields(countBody)}
+                                                    onClick={() => this.editComment(comment.id, body)}
+                                                >
+                                                    SEND
+                                                </Button>
                                             </div>
                                         </div>
                                 </CardContent>

@@ -10,9 +10,8 @@ const headers = {
 
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const FETCH_POST = 'FETCH_POST'
-export const ORDERBY_POSTS = 'ORDERBY_POSTS'
 export const RESET_POSTS = 'RESET_POSTS'
-export const UPDATE_POST_VOTE_SCORE_LIST = 'UPDATE_POST_VOTE_SCORE_LIST'
+export const UPDATE_POST = 'UPDATE_POST'
 export const UPDATE_POST_LIST = 'UPDATE_POST_LIST'
 export const MERGE_COMMENTS = 'MERGE_COMMENTS'
 export const UPDATE_COMMENT_LIST = 'UPDATE_COMMENT_LIST'
@@ -83,7 +82,7 @@ export const updatePostVote = (id, vote) => {
             return response
         })
         .then((response) => response.json())
-        .then((response) => dispatch(updateVotePostList(response)))
+        .then((response) => dispatch(updatePost(response)))
         .catch((erro) => console.log(erro))
     }
 }
@@ -164,9 +163,9 @@ export const newComment = (comment) => {
     }
 }
 
-export const updateVotePostList = (post) => {
+export const updatePost = (post) => {
     return {
-      type: UPDATE_POST_VOTE_SCORE_LIST, 
+      type: UPDATE_POST, 
       post
     }
 }
@@ -259,6 +258,27 @@ export const editComment = (commentId, body) => {
         })
         .then((response) => response.json())
         .then((response) => dispatch(updateCommentList(response)))
+        .catch((erro) => console.log(erro))
+    }
+}
+
+export const editPost = (postId, content) => {
+    return (dispatch) => {
+        fetch(`${api}/posts/${postId}`, {
+            method: 'PUT', headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify({title: content.title, body: content.body, timestamp: Date.now() })
+        })
+        .then((response) => {
+            if(!response.ok) {
+                throw Error(response.statusText)
+            }
+            return response
+        })
+        .then((response) => response.json())
+        .then((data) => dispatch(updatePost(data)))
         .catch((erro) => console.log(erro))
     }
 }
