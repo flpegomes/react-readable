@@ -64,6 +64,10 @@ class PostDetail extends Component {
 
     render() {
         const { classes, categories, post, category, orderby, comments } = this.props 
+        if(post.id === undefined) {
+            console.log('a')
+        }
+        console.log(post)
         return (
 
             <Paper className={classes.paper}>

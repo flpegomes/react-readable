@@ -15,7 +15,7 @@ import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import { formatDate, formatAvatar } from '../../utils/helpers'
-import { updatePostVote, editPost } from '../../modules/actions/posts';
+import { updatePostVote, editPost, deletePost } from '../../modules/actions/posts';
 import { Link } from 'react-router-dom'
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Menu from '@material-ui/core/Menu';
@@ -88,11 +88,15 @@ class Post extends Component {
         anchorEl: null,
     };
 
-    handleClick = event => {
-        this.setState({ anchorEl: event.currentTarget });
+    handleDelete = postId => {
+        this.props.dispatch(deletePost(postId))
+        this.setState({ ...this.state, isEditing: false, anchorEl: null });
     };
 
-    
+    handleClick = event => {
+        this.setState({ ...this.state, anchorEl: event.currentTarget });
+    };
+
     handleCancelEdit = () => {
         this.setState({ ...this.state, isEditing: false, anchorEl: null });
     };
@@ -175,7 +179,7 @@ class Post extends Component {
                                     onClose={this.handleClose}
                                 >
                                     <MenuItem onClick={() => this.handleEdit(post)}>Edit</MenuItem>
-                                    <MenuItem onClick={this.handleClose}>Delete</MenuItem>
+                                    <MenuItem onClick={() => this.handleDelete(post.id)}>Delete</MenuItem>
                                 </Menu>
                             </div>
                         }

@@ -24,7 +24,7 @@ function fetchPosts (posts) {
     }
 }
 
-export const getPosts = (category, orderby) => {
+export const getPosts = (category) => {
     return (dispatch) => {
         let url
         if(category === 'all') {
@@ -40,7 +40,6 @@ export const getPosts = (category, orderby) => {
                 return response
             })
         .then((response) => response.json())
-        .then((data) => orderByLists(orderby, data))
         .then((data) => {
             const postsSchema = new schema.Entity('posts')
             const postsListSchema = [postsSchema]
@@ -223,11 +222,10 @@ export const getPostComments = (postId) => {
 export const deleteComment = (commentId, parentId) => {
     return (dispatch) => {
         fetch(`${api}/comments/${commentId}`, {
-            method: 'PUT', headers: {
+            method: 'DELETE', headers: {
                 ...headers,
                 'Content-Type': 'application/json'
             }, 
-            body: JSON.stringify({deleted: true })
         })
         .then((response) => {
             if(!response.ok) {
@@ -279,6 +277,26 @@ export const editPost = (postId, content) => {
         })
         .then((response) => response.json())
         .then((data) => dispatch(updatePost(data)))
+        .catch((erro) => console.log(erro))
+    }
+}
+
+export const deletePost = (postId) => {
+    return (dispatch) => {
+        fetch(`${api}/posts/${postId}`, {
+            method: 'DELETE', headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+            }, 
+        })
+        .then((response) => {
+            if(!response.ok) {
+                throw Error(response.statusText)
+            }
+            return response
+        })
+        .then((response) => response.json())
+        .then((response) => console.log(response))
         .catch((erro) => console.log(erro))
     }
 }

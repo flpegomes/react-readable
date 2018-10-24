@@ -13,6 +13,8 @@ import { withRouter } from 'react-router-dom'
 import { getPosts } from '../../modules/actions/posts';
 import Typography from '@material-ui/core/Typography';
 import _ from 'lodash'
+import { orderByLists } from '../../utils/helpers'
+
 
 
 
@@ -88,10 +90,11 @@ function mapStateToProps(state) {
          state.posts.listPosts = []
     }
     //const arrayListPosts = Object.keys(state.posts.listPosts).map(id => state.posts.listPosts[id]) 
-    const arrayListPosts = _.values(state.posts.listPosts)  
+    const posts = orderByLists(state.currentMenu.orderby, _.values(state.posts.listPosts))
+
     return {
       categories: state.categories,
-      posts: arrayListPosts,
+      posts,
       orderby: state.currentMenu.orderby
     }
   }
