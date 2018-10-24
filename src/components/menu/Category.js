@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'redux'
-import Chip from '@material-ui/core/Chip';
 import { Link, withRouter } from 'react-router-dom'
+
+//material-ui
+import Chip from '@material-ui/core/Chip'
+import { withStyles } from '@material-ui/core/styles'
+
 
 
 

@@ -1,38 +1,25 @@
 import React, { Component } from 'react'
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+
+//modules
 import { newComment } from '../../modules/actions/posts'
 
-
+//material-ui
+import Typography from '@material-ui/core/Typography'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import { withStyles } from '@material-ui/core/styles'
 
 
 
 const styles = {
-    paper: {
-      flexGrow: 1,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      marginTop: 32,
-      padding:32,
-      maxWidth: 1000
-    },
-    chip: {
-        marginLeft: 8,
-        marginRight: 8
-    },
     card: {
         marginTop: 16,
         backgroundColor:'#F4F4F4',
         marginBottom: 16
-    },
-    avatar: {
-        backgroundColor: '#0277bd',
     },
     container: {
         flexWrap: 'wrap',
@@ -41,11 +28,7 @@ const styles = {
         flexGrow: 1,
         display: 'flex'
     },
-      grow: {
-        flexGrow: 1,
-    },
-    actions: {
-        display: 'flex',
+    grow: {
         flexGrow: 1,
     },
     subtitle: {
@@ -66,11 +49,6 @@ const styles = {
         marginTop: 16,
         elevation: 0
     },
-    selectCategory: {
-        marginRight: 16,
-        marginLeft: 'auto',
-        alignSelf: 'center'
-    }
     
 }
 

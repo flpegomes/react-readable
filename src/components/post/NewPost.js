@@ -1,31 +1,20 @@
 import React, { Component } from 'react'
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-//import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
-import Card from '@material-ui/core/Card';
-//import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-//import CardActions from '@material-ui/core/CardActions';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+
+//modules
 import { newPost } from '../../modules/actions/posts'
 
-
-
-
+//material-ui
+import Chip from '@material-ui/core/Chip';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
-    paper: {
-      flexGrow: 1,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      marginTop: 32,
-      padding:32,
-      maxWidth: 1000
-    },
     chip: {
         marginLeft: 8,
         marginRight: 8
@@ -45,11 +34,7 @@ const styles = {
         flexGrow: 1,
         display: 'flex'
     },
-      grow: {
-        flexGrow: 1,
-    },
-    actions: {
-        display: 'flex',
+    grow: {
         flexGrow: 1,
     },
     subtitle: {

@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'redux'
-import Chip from '@material-ui/core/Chip';
-import { withRouter } from 'react-router-dom'
-import Whatshot from '@material-ui/icons/Whatshot';
-import FiberNew from '@material-ui/icons/FiberNew';
-import { selectOrderBy } from '../../modules/actions/menu';
 import { connect } from 'react-redux'
-import Typography from '@material-ui/core/Typography';
+import { withRouter } from 'react-router-dom'
 
+//modules
+import { selectOrderBy } from '../../modules/actions/menu'
 
-
+//material-ui
+import Typography from '@material-ui/core/Typography'
+import Whatshot from '@material-ui/icons/Whatshot'
+import FiberNew from '@material-ui/icons/FiberNew'
+import Chip from '@material-ui/core/Chip'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = {
     chip: {

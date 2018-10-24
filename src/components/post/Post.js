@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { Link } from 'react-router-dom'
+
+//modules and utils
+import { formatDate, formatAvatar } from '../../utils/helpers'
+import { updatePostVote, editPost, deletePost } from '../../modules/actions/posts';
+
+//material-ui
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
@@ -14,26 +24,10 @@ import IconButton from '@material-ui/core/IconButton';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
-import { formatDate, formatAvatar } from '../../utils/helpers'
-import { updatePostVote, editPost, deletePost } from '../../modules/actions/posts';
-import { Link } from 'react-router-dom'
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-
-
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
-    paper: {
-      flexGrow: 1,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      marginTop: 32,
-      padding:32,
-      maxWidth: 1000
-    },
     chip: {
         marginRight: 16
     },
@@ -44,15 +38,11 @@ const styles = {
     avatar: {
         backgroundColor: '#0277bd',
     },
-    container: {
-        display: 'flex',
-        flex:1,
-    },
     root: {
         flexGrow: 1,
         display: 'flex'
     },
-      grow: {
+    grow: {
         flexGrow: 1,
     },
     actions: {
@@ -72,7 +62,6 @@ const styles = {
         elevation: 0,
         marginLeft: 8
     }
-    
 }
 
 class Post extends Component {

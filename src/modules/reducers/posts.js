@@ -38,14 +38,6 @@ export default function post ( state = [] , action) {
                     ...action.post,
                 }
             }
-        case MERGE_COMMENTS:
-            return {
-                ...state,
-                post: {
-                    ...state.post,
-                    replies: action.comments
-                }
-            } 
         case UPDATE_POST_LIST:
             return {
                 ...state,
@@ -54,6 +46,14 @@ export default function post ( state = [] , action) {
                     ...state.listPosts,
                 }
             }
+        case MERGE_COMMENTS:
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    replies: action.comments
+                }
+            } 
         case UPDATE_COMMENT_LIST: 
             return {
                 ...state,
@@ -65,8 +65,6 @@ export default function post ( state = [] , action) {
                     }
                 }
             }
-        case RESET_POSTS:
-            return []        
         default:
             return state
     }

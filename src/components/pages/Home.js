@@ -1,20 +1,27 @@
 import React, { Component } from 'react'
-import Paper from '@material-ui/core/Paper'
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import PostList from '../post/PostList'
-import { getCategories } from '../../modules/actions/categories'
-import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
-import Category from '../menu/Category'
-import OrderBy from '../menu/OrderBy'
-import NewPost from '../post/NewPost'
 import { withRouter } from 'react-router-dom'
-import { getPosts } from '../../modules/actions/posts';
-import Typography from '@material-ui/core/Typography';
+
+//utils
 import _ from 'lodash'
 import { orderByLists } from '../../utils/helpers'
 
+//components
+import PostList from '../post/PostList'
+import Category from '../menu/Category'
+import OrderBy from '../menu/OrderBy'
+import NewPost from '../post/NewPost'
+
+//modules
+import { getCategories } from '../../modules/actions/categories'
+import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
+import { getPosts } from '../../modules/actions/posts'
+
+//material-ui
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
 
 
 
@@ -27,9 +34,6 @@ const styles = {
       padding:32,
       maxWidth: 1000
     },    
-    chip: {
-        marginRight: 16
-    },
     subtitle: {
         fontSize: 12,
         color: '#aaa',

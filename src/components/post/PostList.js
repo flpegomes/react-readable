@@ -1,24 +1,7 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles';
-//import { connect } from 'react-redux'
-import { compose } from 'redux'
+
+//component
 import Post from './Post'
-
-
-
-
-
-
-const styles = {
-    paper: {
-      flexGrow: 1,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      marginTop: 32,
-      padding:32,
-      maxWidth: 1000
-    },    
-}
 
 class PostList extends Component {
 
@@ -43,8 +26,4 @@ class PostList extends Component {
     }
 }
 
-export default compose(
-    withStyles(styles, {
-      name: 'PostList',
-    })
-  )(PostList);
+export default (PostList);

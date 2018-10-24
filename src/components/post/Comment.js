@@ -1,36 +1,29 @@
 import React, { Component } from 'react'
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import IconButton from '@material-ui/core/IconButton';
-import ThumbUp from '@material-ui/icons/ThumbUp';
-import ThumbDown from '@material-ui/icons/ThumbDown';
+
+//utils and modules
 import { formatDate, formatAvatar } from '../../utils/helpers'
-import { updateCommentVote, deleteComment, editComment } from '../../modules/actions/posts';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { updateCommentVote, deleteComment, editComment } from '../../modules/actions/posts'
+
+//material-ui
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import IconButton from '@material-ui/core/IconButton'
+import ThumbUp from '@material-ui/icons/ThumbUp'
+import ThumbDown from '@material-ui/icons/ThumbDown'
+import Avatar from '@material-ui/core/Avatar'
+import Card from '@material-ui/core/Card'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = {
-    paper: {
-      flexGrow: 1,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      marginTop: 32,
-      padding:32,
-      maxWidth: 1000
-    },
-    chip: {
-        marginRight: 16
-    },
     card: {
         marginTop: 0,
         backgroundColor:'#f4f4f4',
@@ -39,10 +32,6 @@ const styles = {
     },
     avatar: {
         backgroundColor: '#0277bd',
-    },
-    container: {
-        display: 'flex',
-        flex:1,
     },
     root: {
         flexGrow: 1,

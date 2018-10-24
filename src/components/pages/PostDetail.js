@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
-import Paper from '@material-ui/core/Paper'
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+
+//components
 import Post from '../post/Post'
 import Comment from '../post/Comment'
 import Category from '../menu/Category'
 import OrderBy from '../menu/OrderBy'
+import NewComment from '../post/NewComment'
+
+//modules
 import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
 import { withRouter } from 'react-router-dom'
-import { getPostDetail } from '../../modules/actions/posts';
+import { getPostDetail } from '../../modules/actions/posts'
 import { getCategories } from '../../modules/actions/categories'
-import Typography from '@material-ui/core/Typography';
-import _ from 'lodash'
-import NewComment from '../post/NewComment'
+
+//utils
 import { orderByLists } from '../../utils/helpers'
+import _ from 'lodash'
 
-
-
-
+//material-ui
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
 
 const styles = {
     paper: {
@@ -67,7 +71,6 @@ class PostDetail extends Component {
         if(post.id === undefined) {
             console.log('a')
         }
-        console.log(post)
         return (
 
             <Paper className={classes.paper}>
