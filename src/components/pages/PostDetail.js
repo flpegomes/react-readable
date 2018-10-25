@@ -9,6 +9,7 @@ import Comment from '../post/Comment'
 import Category from '../menu/Category'
 import OrderBy from '../menu/OrderBy'
 import NewComment from '../post/NewComment'
+import NotFound from './NotFound'
 
 //modules
 import { selectCategory, selectOrderBy } from '../../modules/actions/menu'
@@ -46,16 +47,27 @@ class PostDetail extends Component {
     componentDidMount() {
         const category = this.props.match.params.category
         const postId = this.props.match.params.post_id
+
+        //traz as categorias do banco de dados
         this.props.dispatch(getCategories());
+
+        //muda a categoria para 'everything'
         this.props.dispatch(selectCategory(category));
+
+        //muda a ordenação no estado da aplicação
         this.props.dispatch(selectOrderBy('hot'))
+
+        //usado para trazer as informações do post de acordo com o id passado na barra de endereços
         this.props.dispatch(getPostDetail(postId)) 
     }
 
     componentWillReceiveProps(nextProps) {
+
+        //pega a categoria nova e o id novo na barra de endereço
         const newCategory = nextProps.match.params.category
         const postId = this.props.match.params.post_id
 
+        //atualiza o estado com os dados novos
         if((this.props.category !== newCategory) || this.props.orderby !== nextProps.orderby) {
             this.props.dispatch(selectCategory(newCategory))
             this.props.dispatch(getPostDetail(postId));
@@ -68,44 +80,39 @@ class PostDetail extends Component {
 
     render() {
         const { classes, categories, post, category, orderby, comments } = this.props 
-        if(post.id === undefined) {
-            console.log('a')
-        }
         return (
+            <div>
+                {post.id ? (
+                    <Paper className={classes.paper}>
+                        <div style={{display:'flex'}}>
+                            <div style={{marginBottom: 8, flex:1}}>
+                                <OrderBy currentOrderby={orderby}/>
+                            </div>
 
-            <Paper className={classes.paper}>
-                <div style={{display:'flex'}}>
-                    <div style={{marginBottom: 8, flex:1}}>
-                        <OrderBy currentOrderby={orderby}/>
-                    </div>
+                            <Typography variant='subtitle1' component="div" className={classes.subtitle}>
+                                SELECT FILTER
+                                <Category key='all' currentCategory='all' name='everything' path={'/'} />
 
-                    <Typography variant='subtitle1' component="div" className={classes.subtitle}>
-                        SELECT FILTER
-                        <Category key='all' currentCategory='all' name='everything' path={'/'} />
-
-                        {categories.map((item) => (
-                            <Category key={item.path} currentCategory={category} name={item.name} path={item.path} />
-                        ))}
-                    </Typography>
-                </div>
-                {post !== undefined && (
-                    <div>
-                        <Post post={post} />
-                        <NewComment parentId={this.props.parentId} />
-                        {comments.map((reply, i) => 
-                            <Comment 
-                                key={reply.id} 
-                                comment={reply}                         
-                            />
+                                {categories.map((item) => (
+                                    <Category key={item.path} currentCategory={category} name={item.name} path={item.path} />
+                                ))}
+                            </Typography>
+                        </div>
+                        {post !== undefined && (
+                            <div>
+                                <Post post={post} />
+                                <NewComment parentId={this.props.parentId} />
+                                {comments.map((reply, i) => 
+                                    <Comment 
+                                        key={reply.id} 
+                                        comment={reply}                         
+                                    />
+                                )}
+                            </div>
                         )}
-                    </div>
-                )}
-                
-                
-
-                
-                
-            </Paper>
+                    </Paper>
+                ) : <NotFound />}
+            </div>
         )
     }
 }
@@ -115,6 +122,8 @@ function mapStateToProps(state, params) {
     if(state.posts.post === undefined) {
         state.posts.post = []
     } 
+    
+    //Uso do lodash para transformar o objeto em array e depois ordena-lo de acordo com a opção de ordenação atual
     const comments = orderByLists(state.currentMenu.orderby, _.values(state.posts.post.replies))
     
     return {

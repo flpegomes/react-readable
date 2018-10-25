@@ -61,6 +61,9 @@ const styles = {
         marginTop: 16,
         elevation: 0,
         marginLeft: 8
+    },
+    textField :{
+        minWidth: '50%'
     }
 }
 
@@ -84,6 +87,10 @@ class Post extends Component {
 
     handleClick = event => {
         this.setState({ ...this.state, anchorEl: event.currentTarget });
+    };
+
+    handleClose = () => {
+        this.setState({ anchorEl: null });
     };
 
     handleCancelEdit = () => {

@@ -54,12 +54,16 @@ const styles = {
 
 class NewComment extends Component {
 
+
+    //controlador de textfield de acordo com o nome do atributo do state passado
     handleChange = name => event => {
         this.setState({
             newComment: { ...this.state.newComment, [name]: event.target.value, }
         });
     };
 
+
+    //metodo para adicionar o comentario e limpar o body
     addPost = (comment) => {
         console.log(this.state.newComment)
         this.props.dispatch(newComment(comment))
@@ -72,7 +76,7 @@ class NewComment extends Component {
         })
     }
 
-    
+    //verifica body
     _verifyFields = (countBody) => {
         if(countBody < 300 ){
             if(countBody >= 0) {

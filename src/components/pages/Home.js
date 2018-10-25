@@ -46,9 +46,17 @@ const styles = {
 class Home extends Component {
     
     componentDidMount() {
+
+        //traz as categorias do banco de dados
         this.props.dispatch(getCategories());
-        this.props.dispatch(selectCategory('all'));
+
+        //muda a categoria para 'everything'
+        this.props.dispatch(selectCategory('all'))
+
+        //muda a ordenação no estado da aplicação
         this.props.dispatch(selectOrderBy(this.props.orderby))
+
+        //Traz todas as postagens do servidor
         this.props.dispatch(getPosts('all', this.props.orderby ))
     }
 
@@ -56,7 +64,6 @@ class Home extends Component {
         if(this.props.orderby !== nextProps.orderby) {
             this.props.dispatch(getPosts('all', nextProps.orderby ))
         }
-        
     }
     
     render() {
@@ -72,6 +79,9 @@ class Home extends Component {
 
                     <Typography variant='subtitle1' component="div" className={classes.subtitle}>
                         SELECT FILTER
+
+                        {/* Adicionamos 'na mão' a categoria everything, já que ela nao existe no servidor e logo após um .map para
+                            renderizar todas as categorias cadastradas. */}
                         <Category key='all' currentCategory='everything' name='everything' path={'/'} />
 
                         {categories.map((item) => (
@@ -90,10 +100,13 @@ class Home extends Component {
 }
 
 function mapStateToProps(state) {
+    
+    //usado para a primeira renderização
     if(state.posts.listPosts === undefined) {
          state.posts.listPosts = []
     }
-    //const arrayListPosts = Object.keys(state.posts.listPosts).map(id => state.posts.listPosts[id]) 
+
+    //Uso do lodash para transformar o objeto em array e depois ordena-lo de acordo com a opção de ordenação atual
     const posts = orderByLists(state.currentMenu.orderby, _.values(state.posts.listPosts))
 
     return {

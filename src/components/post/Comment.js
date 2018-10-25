@@ -62,38 +62,51 @@ const styles = {
 
 class Comment extends Component {
 
+    //metodo usado no botão para o voto
     handleVote = (id, vote) => {
         this.props.dispatch(updateCommentVote(id, vote))
     }
 
+    //usado para deletar o comentario, passando o id do comentario e o id do post e apos clicar o menu fecha
     handleDelete = (commentId, parentId) => {
         this.props.dispatch(deleteComment(commentId, parentId))
         this.setState({ ...this.state, anchorEl: null });
     };
 
+    //libera a edição do comentário
     handleEdit = () => {
         this.setState({ ...this.state, isEditing: true, anchorEl: null });
     };
 
+    //cancela a edição do comentário
     handleCancelEdit = () => {
         this.setState({ ...this.state, isEditing: false, anchorEl: null });
     };
 
+    //usado para fechar o menu ao clicar em qualquer lugar
+    handleClose = () => {
+        this.setState({ anchorEl: null });
+    };
+
+    //abre o menu
     handleClick = event => {
         this.setState({ ...this.state, anchorEl: event.currentTarget });
     };
 
+    //controle do textfield
     handleChange = name => event => {
         this.setState({
             contentComment: { ...this.state, [name]: event.target.value }
         });
     };
 
+    //função usada no botão send para enviar o comentário editado
     editComment = (id, body) => {
         this.props.dispatch(editComment(id, body))
         this.setState({ ...this.state, isEditing: false, anchorEl: null });
     }
 
+    //verifica o body com limite de 300 caracteres e com alguma coisa digitada
     _verifyFields = (countBody) => {
         if(countBody < 300 ){
             if(countBody >= 0) {
@@ -106,9 +119,14 @@ class Comment extends Component {
         }
     }
 
-    state = {
+    state = {   
+        //menu
         anchorEl: null,
+
+        //habilitar o editor
         isEditing: false,
+
+        //comentário
         contentComment: {
             body: this.props.comment.body
         }
@@ -119,6 +137,8 @@ class Comment extends Component {
         const { classes, comment, } = this.props 
         const { anchorEl, isEditing } = this.state
         const { body } = this.state.contentComment
+
+        //count do tamanho do body
         const countBody = 300 - body.length
         return (               
                 <Card raised={false} className={classes.card}>
@@ -179,6 +199,8 @@ class Comment extends Component {
                                                         <span className={classes.grow}>
                                                         </span>
                                                         <span>
+                                                            {/* se o body passar de 280 caracteres o 
+                                                                contador dele fica vermelho na pagina */}
                                                             {countBody < 20 ? (
                                                                 <span style={{color:'#ff0000'}}>
                                                                     {countBody}

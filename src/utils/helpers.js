@@ -4,12 +4,14 @@ export function formatDate (timestamp) {
     return d.toLocaleDateString() + '  -  '  + time.substr(0, 5) + time.slice(-2)
 }
 
+//usado para colocar a primeira letra do autor no avatar
 export const formatAvatar = (str = '') => {
     return typeof str !== 'string' ? '' : str.substring(0, 1).toUpperCase()
 }
 
-export const orderByLists = (orderby, posts) => {
-    return posts.sort((a, b) => {
+//ordena os dados de acordo com os parametros
+export const orderByLists = (orderby, data) => {
+    return data.sort((a, b) => {
       if (orderby === 'new') {
         return b.timestamp - a.timestamp
       }

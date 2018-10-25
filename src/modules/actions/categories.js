@@ -13,12 +13,15 @@ function fetchCategories (categories) {
     }
 }
 
+/*
+ *  GET - Todas as categorias
+ */
 export const getCategories = () => {
     return (dispatch) => {
         fetch(`${api}/categories`, {headers})
             .then((response) => {
                 if (!response.ok) {
-                throw Error(response.statusText)
+                    throw Error(response.statusText)
                 }
                 return response
             })

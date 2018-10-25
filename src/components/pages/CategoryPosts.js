@@ -44,18 +44,32 @@ const styles = {
 class CategoryPosts extends Component {
     
     componentDidMount() {
+
+        //pega a categoria do endereço da aplicação
         const category = this.props.match.params.category
+
+        //traz as categorias do banco de dados
         this.props.dispatch(getCategories());
+
+        //muda a categoria no estado
         this.props.dispatch(selectCategory(category));
+
+        //muda a ordenação no estado da aplicação
         this.props.dispatch(selectOrderBy(this.props.orderby))
-        this.props.dispatch(getPosts(category, this.props.orderby));
+
+        //Traz todas as postagens do servidor de acordo com a categoria passada
+        this.props.dispatch(getPosts(category));
     }
 
     componentWillReceiveProps(nextProps) {
+
+        //pega a nova categoria no endereço da aplicação
         const newCategory = nextProps.match.params.category
+
+        //se a categoria ou o orderby mudar, atualizamos a lista de postagens de acordo com a nova categoria
         if((this.props.category !== newCategory) || this.props.orderby !== nextProps.orderby) {
             this.props.dispatch(selectCategory(newCategory))
-            this.props.dispatch(getPosts(newCategory, nextProps.orderby));
+            this.props.dispatch(getPosts(newCategory));
         }
         
     }
@@ -66,7 +80,6 @@ class CategoryPosts extends Component {
     render() {
         const { classes, categories, posts, category, orderby } = this.props 
         return (
-
             <Paper className={classes.paper}>
                 <div style={{display:'flex'}}>
                     <div style={{marginBottom: 8, flex:1}}>
@@ -75,6 +88,9 @@ class CategoryPosts extends Component {
 
                     <Typography variant='subtitle1' component="div" className={classes.subtitle}>
                         SELECT FILTER
+
+                        {/* Adicionamos 'na mão' a categoria everything, já que ela nao existe no servidor e logo após um .map para
+                            renderizar todas as categorias cadastradas. */}
                         <Category key='all' currentCategory='all' name='everything' path={'/'} />
 
                         {categories.map((item) => (
@@ -91,10 +107,13 @@ class CategoryPosts extends Component {
 }
 
 function mapStateToProps(state) {
+
+    //usado para a primeira renderização
     if(state.posts.listPosts === undefined) {
         state.posts.listPosts = []
     }
-    //const arrayListPosts = Object.keys(state.posts.listPosts).map(id => state.posts.listPosts[id]) 
+
+    //Uso do lodash para transformar o objeto em array e depois ordena-lo de acordo com a opção de ordenação atual
     const posts = orderByLists(state.currentMenu.orderby, _.values(state.posts.listPosts))
     return {
       categories: state.categories,

@@ -26,6 +26,7 @@ const styles = {
 
 }
 
+//componente que renderiza as opções de ordenação da aplicação
 class OrderBy extends Component {
 
     handleClick = (orderby) => {

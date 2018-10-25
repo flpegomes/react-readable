@@ -126,22 +126,7 @@ class NewPost extends Component {
         const countTitle = 50 - title.length
         return (                
             <form className={classes.container} noValidate autoComplete="off">
-                <Card raised={false} className={classes.card} elevation={0}> 
-                    {/* <CardHeader
-                        avatar={
-                            <Avatar aria-label="Recipe" className={classes.avatar}>
-                            N
-                            </Avatar>
-                        }
-
-                        title={
-                            <Typography variant='h6' component="p" className={classes.subtitle}>
-                                NEW POST
-                            </Typography>
-                        }
-
-                    /> */}
-                        
+                <Card raised={false} className={classes.card} elevation={0}>                         
                     <CardContent>
                         <div style={{margin: 16}}>
                             <Typography variant='h6' component="div" className={classes.subtitle}>

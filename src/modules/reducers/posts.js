@@ -1,13 +1,13 @@
 import {    FETCH_POSTS, 
-            RESET_POSTS, 
             UPDATE_POST,
             UPDATE_POST_LIST, 
             FETCH_POST,
             MERGE_COMMENTS,
-            UPDATE_COMMENT_LIST
+            UPDATE_COMMENT_LIST,
+            RESET_POST
 } from '../actions/posts'
 
-export default function post ( state = [] , action) {
+export default function post (state = [] , action) {
     switch(action.type) {
         case FETCH_POSTS: 
             return {
@@ -20,7 +20,6 @@ export default function post ( state = [] , action) {
                 post: {
                     ...state.post,
                     ...action.post,
-                    
                 }
             } 
         case UPDATE_POST:
@@ -64,6 +63,11 @@ export default function post ( state = [] , action) {
                         [action.comment.id] : action.comment,
                     }
                 }
+            }
+        case RESET_POST: 
+            return {
+                ...state,
+                post: []
             }
         default:
             return state

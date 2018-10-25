@@ -6,19 +6,14 @@ import { Link, withRouter } from 'react-router-dom'
 import Chip from '@material-ui/core/Chip'
 import { withStyles } from '@material-ui/core/styles'
 
-
-
-
-
 const styles = {
     chip: {
         marginLeft: 16
     },
 
 }
-
+//componente que renderiza as opções de filtros de categorias
 class Category extends Component {
-    
     
     render() {
         
@@ -30,7 +25,7 @@ class Category extends Component {
                     label={name}
                     className={classes.chip}
                     component={Link}
-                    to={path === '/' ? '/' : `/${path}`}
+                    to={path === '/' ? '/' : `/category/${path}`}
                     color={currentCategory === name ? 'primary' : 'default'}
                 />
             </span>
