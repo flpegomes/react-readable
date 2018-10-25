@@ -2,7 +2,7 @@
 
 O objetivo do projeto é a absorção de conteúdo e desenvolvimento de uma aplicação totalmente em React utilizando redux.
 
-## Inicizalizando o projeto 
+## Inicializando o projeto 
 
 Para inicializar o projeto basta executar dentro da pasta */react-readable/* e */react-readable/api-server/* para instalar as dependencias tanto do servidor como da aplicação.
 
