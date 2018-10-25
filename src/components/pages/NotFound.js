@@ -68,7 +68,7 @@ class NotFound extends Component {
                     <Card raised={false} className={classes.card} elevation={0}> 
                         <CardContent>
                             <div style={{margin: 16}}>
-                                <Typography variant='h6' component="div" className={classes.subtitle}>
+                                <Typography variant='h6' component="div" className={classes.msg}>
                                     404 NOT FOUND - This post was not found or does not exist.
                                 </Typography>
                             </div>  
@@ -85,7 +85,9 @@ function mapStateToProps(state) {
     return {
       categories: state.categories,
       category: state.currentMenu.category,
-      orderby: state.currentMenu.orderby
+      orderby: state.currentMenu.orderby,
+      user: state.user
+
     }
   }
 

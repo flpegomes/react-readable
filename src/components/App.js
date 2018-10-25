@@ -7,7 +7,6 @@ import CategoryPosts from './pages/CategoryPosts';
 import PostDetail from './pages/PostDetail';
 import NotFound from './pages/NotFound';
 
-
 class App extends Component {
 
   render() {
@@ -29,4 +28,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default (App);

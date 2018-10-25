@@ -59,12 +59,6 @@ class Home extends Component {
         //Traz todas as postagens do servidor
         this.props.dispatch(getPosts('all', this.props.orderby ))
     }
-
-    componentWillReceiveProps(nextProps) {
-        if(this.props.orderby !== nextProps.orderby) {
-            this.props.dispatch(getPosts('all', nextProps.orderby ))
-        }
-    }
     
     render() {
         
@@ -112,7 +106,8 @@ function mapStateToProps(state) {
     return {
       categories: state.categories,
       posts,
-      orderby: state.currentMenu.orderby
+      orderby: state.currentMenu.orderby,
+
     }
   }
   

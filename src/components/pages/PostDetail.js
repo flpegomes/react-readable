@@ -132,7 +132,7 @@ function mapStateToProps(state, params) {
       post: state.posts.post,
       comments,
       category: state.currentMenu.category,
-      orderby: state.currentMenu.orderby
+      orderby: state.currentMenu.orderby,
     }
   }
 

@@ -5,7 +5,7 @@ import currentMenu from './menu'
 
 
 export default combineReducers({
-    categories: categories,
-    posts: posts,
-    currentMenu: currentMenu,
+    categories,
+    posts,
+    currentMenu,
 })

@@ -119,7 +119,9 @@ function mapStateToProps(state) {
       categories: state.categories,
       posts,
       category: state.currentMenu.category,
-      orderby: state.currentMenu.orderby
+      orderby: state.currentMenu.orderby,
+      user: state.user
+
     }
   }
 
